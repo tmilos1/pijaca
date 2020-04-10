@@ -22,6 +22,10 @@ const Hero = () => {
                 <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                     Besplatna prijava!
                 </Typography>
+                <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                    Ukoliko prodajete voće, povrće ili bilo šta na pijaci, ovde možete besplatno postaviti,
+                    Vašu digitalnu tezgu.
+                </Typography>
                 <div className={classes.heroButtons}>
                     <Grid container spacing={2} justify="center">
                         <Grid item>

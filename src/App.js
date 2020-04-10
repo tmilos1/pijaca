@@ -16,6 +16,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
 import Home from './pages/Home'
+import Tezga from './pages/Tezga'
 import Wizard from './pages/PrijavaTezge/Wizard'
 import Footer from './components/Footer'
 
@@ -47,7 +48,7 @@ function App() {
               <EcoIcon className={classes.icon} />
               <Link className={classes.homeLink} to="/">
                 <Typography variant="h6" color="inherit" noWrap>
-                  Pijaca
+                  Pijaca - Kruševac
                 </Typography>
               </Link>
             </Toolbar>
@@ -55,6 +56,10 @@ function App() {
         </AppBar>
 
         <Switch>
+
+          <Route path="/tezga/:tezgaId">
+            <Tezga />
+          </Route>
 
           <Route path="/prijava-tezge">
             <Wizard />

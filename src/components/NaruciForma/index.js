@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Adresa = () => {
+const NaruciForma = () => {
     const classes = useStyles()
 
     const [values, setValues] = React.useState({
@@ -47,15 +47,14 @@ const Adresa = () => {
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
-                Podaci o prodavcu
+               Adresa za isporuku: 
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                     <TextField
-                        required
                         id="naziv"
                         name="naziv"
-                        label="Ime i prezime ili naziv gazdinstva"
+                        label="Ime i prezime"
                         fullWidth
                         autoComplete="ime"
                     />
@@ -72,16 +71,6 @@ const Adresa = () => {
                 <Grid item xs={12} sm={6} md={3}>
                     <TextField
                         required
-                        id="email"
-                        name="email"
-                        label="Email"
-                        fullWidth
-                        autoComplete="email"
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                    <TextField
-                        required
                         id="telefon"
                         name="telefon"
                         label="Telefon"
@@ -90,30 +79,18 @@ const Adresa = () => {
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                    <FormControl className={clsx(classes.textField)}>
-                        <InputLabel htmlFor="standard-adornment-password">Lozinka</InputLabel>
-                        <Input
-                            id="standard-adornment-password"
-                            type={values.showPassword ? 'text' : 'password'}
-                            value={values.password}
-                            onChange={handleChange('password')}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                    >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
+                    <TextField
+                        id="email"
+                        name="email"
+                        label="Email"
+                        autoComplete="email"
+                        fullWidth
+                    />
                 </Grid>
             </Grid>
         </React.Fragment>
     )
 }
 
-export default Adresa
+export default NaruciForma
+

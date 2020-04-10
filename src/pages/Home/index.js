@@ -28,6 +28,10 @@ const Home = () => {
     return (
       <main>
         <div className={classes.toolbarMargin}>
+          <Hero />
+          <br />
+          <br />
+
           <Container >
             <Grid className={classes.mainContainer} container spacing={3}>
               <Grid className={classes.mainContainer__Filter} item xs={12}>
@@ -38,8 +42,6 @@ const Home = () => {
               </Grid>
             </Grid>
           </Container>
-
-          <Hero />
 
           <Tezge />
         </div>
