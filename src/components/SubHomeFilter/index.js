@@ -6,76 +6,51 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import { makeStyles } from '@material-ui/core/styles'
 
+import { observer } from "mobx-react"
+import { useAppContext } from '../../stores/AppContext'
+
 const useStyles = makeStyles((theme) => ({
-  title: {
-    marginRight: '20px',
-    width: '120px'
-  },
+    title: {
+        marginRight: '20px',
+        width: '120px'
+    },
 }))
 
-const SubHomeFilter = () => {
+const SubHomeFilter = observer(() => {
     const classes = useStyles()
-
-    const [state, setState] = React.useState({
-        checkedA: true,
-        checkedB: true,
-        checkedF: true,
-        checkedG: true,
-    });
+    const { homeFilterStore } = useAppContext()
 
     const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
+        if (event.target.checked) {
+            homeFilterStore.ukljuciPodGrupu(event.target.name)
+        } else {
+            homeFilterStore.iskljuciPodGrupu(event.target.name)
+        }
+    }
 
     return (
-        <FormGroup row>
-            <h2 className={classes.title}>Podgrupa: </h2>
-            <FormControlLabel
-                control={
-                    <Checkbox
-                        checked={state.checkedB}
-                        onChange={handleChange}
-                        name="checkedB"
-                        color="primary"
-                    />
-                }
-                label="Banane"
-            />
-            <FormControlLabel
-                control={
-                    <Checkbox
-                        checked={state.checkedB}
-                        onChange={handleChange}
-                        name="checkedB"
-                        color="primary"
-                    />
-                }
-                label="Kruške"
-            />
-            <FormControlLabel
-                control={
-                    <Checkbox
-                        checked={state.checkedB}
-                        onChange={handleChange}
-                        name="checkedB"
-                        color="primary"
-                    />
-                }
-                label="Jabuke"
-            />
-            <FormControlLabel
-                control={
-                    <Checkbox
-                        checked={state.checkedB}
-                        onChange={handleChange}
-                        name="checkedB"
-                        color="primary"
-                    />
-                }
-                label="Šljive"
-            />
-        </FormGroup>
+        <>
+            {homeFilterStore.filterGrupa.filter(el => el.izabran).map(grupa => (
+                <FormGroup row key={grupa.kod}>
+                    <h2 className={classes.title}>{grupa.naziv}: </h2>
+                    {homeFilterStore.filterPodGrupa.filter(el => el.kodGrupe === grupa.kod).map(podgrupa => (
+                        <FormControlLabel
+                            key={podgrupa.kod}
+                            name={podgrupa.kod}
+                            control={
+                                <Checkbox
+                                    checked={podgrupa.izabran}
+                                    onChange={handleChange}
+                                    color="primary"
+                                />
+                            }
+                            label={podgrupa.naziv}
+                        />
+                    ))}
+                </FormGroup>
+            ))}
+        </>
     )
-}
+})
 
 export default SubHomeFilter
