@@ -28,11 +28,8 @@ const Adresa = observer(() => {
     const classes = useStyles()
 
     const { tezgaStore } = useAppContext()
+
     const [values, setValues] = React.useState({
-        amount: '',
-        password: '',
-        weight: '',
-        weightRange: '',
         showPassword: false,
     });
 

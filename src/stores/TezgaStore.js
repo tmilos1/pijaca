@@ -64,16 +64,36 @@ class TezgaStore extends AbstractFormStore {
         nacinDostave: 'dostava',
         kucnaDostava: '300din',
         files: [],
+        grupe: [],
+        proizvodi: []
     }
 
-    //constructor() {
-        //Validator.registerAsync('email_available', function(username, attribute, req, passes) {
-            // do your database/api checks here etc
-            // then call the `passes` method where appropriate:
-            // passes(); // if username is available
-            // passes(false, 'Ovaj email je već korišćen za drugu tezgu.'); // if username is not available
-          //});
-    //}
+    constructor() {
+        super()
+        // Validator.registerAsync('email_available', function(username, attribute, req, passes) {
+        //     // do your database/api checks here etc
+        //     // then call the `passes` method where appropriate:
+        //     passes(); // if username is available
+        //     passes(false, 'Ovaj email je već korišćen za drugu tezgu.'); // if username is not available
+        //   });
+        this.fetchData()
+    }
+
+    fetchData = () => {
+        fetch('http://localhost:5000/grupe')
+            .then((response) => {
+                return response.json()
+            })
+            .then(data => {
+                for (const row of data) {
+                    this.form.grupe.push({
+                        kod: row.kod,
+                        naziv: row.naziv,
+                        izabran: false
+                    })
+                }
+            })
+    }
 
     handleNacinDostaveChange = (event) => {
         this.form.nacinDostave = event.target.value
@@ -85,7 +105,17 @@ class TezgaStore extends AbstractFormStore {
 
     handleFilesChange = (files) => {
         this.form.files = files
-        console.log(files)
+    }
+
+    handleGrupaChange = (event) => {
+        const izabraniKod = event.target.name
+        const grupa = this.form.grupe.find(el => el.kod === izabraniKod)
+
+        if (grupa.izabran) {
+            grupa.izabran = false
+        } else {
+            grupa.izabran = true
+        }
     }
 }
 

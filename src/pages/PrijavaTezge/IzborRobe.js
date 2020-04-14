@@ -5,18 +5,23 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormGroup from '@material-ui/core/FormGroup'
 
+import { observer } from "mobx-react"
+import { useAppContext } from '../../stores/AppContext'
+
 import GrupaKarticaCenaRobe from '../../containers/GrupaKarticaCenaRobe'
 
-const IzborRobe = () => {
-    const [state, setState] = React.useState({
-        checkedA: false,
-        checkedB: true,
-        checkedF: false,
-    });
+const IzborRobe = observer(() => {
+    const { tezgaStore } = useAppContext()
 
-    const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
+    // const [state, setState] = React.useState({
+    //     checkedA: false,
+    //     checkedB: true,
+    //     checkedF: false,
+    // });
+
+    // const handleChange = (event) => {
+    //     setState({ ...state, [event.target.name]: event.target.checked });
+    // };
 
     return (
         <React.Fragment>
@@ -24,61 +29,33 @@ const IzborRobe = () => {
                 Izbor Robe
             </Typography>
             <Grid container spacing={3}>
-                <Grid item xs={12} >
-                        <FormGroup row>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={state.checkedA}
-                                        onChange={handleChange}
-                                        name="checkedA"
-                                        color="primary"
-                                    />
-                                }
-                                label="Povrće"
-                            />
-                        </FormGroup>
-                </Grid>
-                <Grid item xs={12}>
-                </Grid>
-                <Grid item xs={12} >
-                        <FormGroup row>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={state.checkedB}
-                                        onChange={handleChange}
-                                        name="checkedB"
-                                        color="primary"
-                                    />
-                                }
-                                label="Voće"
-                            />
-                        </FormGroup>
-                </Grid>
-                <Grid item xs={12}>
-                    <GrupaKarticaCenaRobe />
-                </Grid>
-                <Grid item xs={12} >
-                        <FormGroup row>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={state.checkedF}
-                                        onChange={handleChange}
-                                        name="checkedF"
-                                        color="primary"
-                                    />
-                                }
-                                label="Cveće"
-                            />
-                        </FormGroup>
-                </Grid>
-                <Grid item xs={12}>
-                </Grid>
+                {tezgaStore.form.grupe.map(grupa => (
+                    <React.Fragment key={grupa.kod}>
+                        <Grid item xs={12}>
+                            <FormGroup row>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={grupa.izabran}
+                                            onChange={tezgaStore.handleGrupaChange}
+                                            name={grupa.kod}
+                                            color="primary"
+                                        />
+                                    }
+                                    label={grupa.naziv}
+                                />
+                            </FormGroup>
+                        </Grid>
+                        <Grid item xs={12}>
+                            { grupa.izabran && 
+                                <GrupaKarticaCenaRobe />
+                            }
+                        </Grid>
+                    </React.Fragment>
+                ))}
             </Grid>
         </React.Fragment>
     )
-}
+})
 
 export default IzborRobe

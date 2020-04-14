@@ -14,6 +14,9 @@ import { Link } from "react-router-dom"
 import { observer } from "mobx-react"
 import { useAppContext } from '../../stores/AppContext'
 
+import Adresa from './Adresa'
+import UsloviIsporuke from './UsloviIsporuke'
+import GalerijaSlika from './GalerijaSlika'
 import IzborRobe from './IzborRobe'
 
 const useStyles = makeStyles((theme) => ({
@@ -46,11 +49,11 @@ const steps = ['Podaci o prodavcu', 'Uslovi isporuke', 'Galerija slika', 'Izbor 
 function getStepContent(step) {
     switch (step) {
         case 0:
-            // return <Adresa />
+            return <Adresa />
         case 1:
-            // return <UsloviIsporuke />
+            return <UsloviIsporuke />
         case 2:
-            // return <GalerijaSlika />
+            return <GalerijaSlika />
         case 3:
             return <IzborRobe />
         default:
