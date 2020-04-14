@@ -4,8 +4,8 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 
 import Hero from '../../components/Hero'
-import MainHomeFilter from '../../components/MainHomeFilter'
-import SubHomeFilter from '../../components/SubHomeFilter'
+import GroupHomeFilter from '../../containers/GroupHomeFilter'
+import ProductHomeFilter from '../../containers/ProductHomeFilter'
 import Tezge from '../../containers/Tezge'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -35,10 +35,10 @@ const Home = () => {
           <Container >
             <Grid className={classes.mainContainer} container spacing={3}>
               <Grid className={classes.mainContainer__Filter} item xs={12}>
-                <MainHomeFilter />
+                <GroupHomeFilter />
               </Grid>
               <Grid classNamain={classes.mainContainer__Filter} item xs={12}>
-                <SubHomeFilter />
+                <ProductHomeFilter />
               </Grid>
             </Grid>
           </Container>

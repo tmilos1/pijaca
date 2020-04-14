@@ -46,7 +46,7 @@ function Tezge() {
                         <Card className={classes.card}>
                             <CardMedia
                                 className={classes.cardMedia}
-                                image="https://source.unsplash.com/random"
+                                image="images/fruit-stand.png"
                                 title="Image title"
                             />
                             <CardContent className={classes.cardContent}>

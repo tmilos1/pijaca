@@ -9,21 +9,19 @@ class HomeFilterStore {
     }
 
     fetchData = () => {
-        this.filterGrupa.push({
-            kod: 'POV',
-            naziv: 'Povrće',
-            izabran: false
-        })
-        this.filterGrupa.push({
-            kod: 'VOC',
-            naziv: 'Voće',
-            izabran: false
-        })
-        this.filterGrupa.push({
-            kod: 'MES',
-            naziv: 'Meso',
-            izabran: false
-        })
+        fetch('http://localhost:5000/grupe')
+            .then((response) => {
+                return response.json()
+            })
+            .then(data => {
+                for (const row of data) {
+                    this.filterGrupa.push({
+                        kod: row.kod,
+                        naziv: row.naziv,
+                        izabran: false
+                    })
+                }
+            })
         this.filterPodGrupa.push({
             kodGrupe: 'POV',
             kod: 'SAR',
