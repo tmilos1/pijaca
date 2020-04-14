@@ -5,9 +5,9 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
-import Carousel, { Dots } from '@brainhubeu/react-carousel'
+import Carousel from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -71,12 +71,12 @@ const Tezga = () => {
                             }
                         }}
                     >
-                        <img width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img width="400" height="300" src="https://source.unsplash.com/random" />
+                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
+                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
+                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
+                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
+                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
+                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
                     </Carousel>
 
                     <br />

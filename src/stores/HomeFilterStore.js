@@ -1,4 +1,4 @@
-import { observable, computed, decorate } from "mobx"
+import { observable, decorate } from "mobx"
 
 class HomeFilterStore {
     filterGrupa = []

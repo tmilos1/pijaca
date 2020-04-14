@@ -11,6 +11,9 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { Link } from "react-router-dom"
 
+import { observer } from "mobx-react"
+import { useAppContext } from '../../stores/AppContext'
+
 import Adresa from './Adresa'
 import UsloviIsporuke from './UsloviIsporuke'
 import GalerijaSlika from './GalerijaSlika'
@@ -58,8 +61,10 @@ function getStepContent(step) {
     }
 }
 
-const Wizard = () => {
+const Wizard = observer(() => {
     const classes = useStyles()
+    const { tezgaAdresaStore } = useAppContext()
+
     const [activeStep, setActiveStep] = React.useState(0)
 
     const handleNext = () => {
@@ -68,6 +73,17 @@ const Wizard = () => {
 
     const handleBack = () => {
         setActiveStep(activeStep - 1)
+    }
+
+    let nextButtonVisible = null
+    switch (activeStep) {
+        case 0:
+            nextButtonVisible = tezgaAdresaStore.form.meta.isValid
+            break;
+
+        default:
+            nextButtonVisible = true
+            break;
     }
 
     return (
@@ -112,6 +128,7 @@ const Wizard = () => {
                                         color="primary"
                                         onClick={handleNext}
                                         className={classes.button}
+                                        disabled={!nextButtonVisible}
                                     >
                                         {activeStep === steps.length - 1 ? 'Podnesi prijavu' : 'Sledeće'}
                                     </Button>
@@ -122,6 +139,6 @@ const Wizard = () => {
             </Paper>
         </Container>
     )
-}
+})
 
 export default Wizard

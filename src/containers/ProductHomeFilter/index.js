@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const SubHomeFilter = observer(() => {
+const ProductHomeFilter = observer(() => {
     const classes = useStyles()
     const { homeFilterStore } = useAppContext()
 
@@ -53,4 +53,4 @@ const SubHomeFilter = observer(() => {
     )
 })
 
-export default SubHomeFilter
+export default ProductHomeFilter
