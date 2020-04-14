@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const Adresa = observer(() => {
     const classes = useStyles()
 
-    const { tezgaAdresaStore } = useAppContext()
+    const { tezgaStore } = useAppContext()
     const [values, setValues] = React.useState({
         amount: '',
         password: '',
@@ -61,10 +61,10 @@ const Adresa = observer(() => {
                         label="Ime i prezime ili naziv gazdinstva"
                         fullWidth
                         autoComplete="ime"
-                        value={tezgaAdresaStore.form.fields.naziv.value}
-                        error={tezgaAdresaStore.form.fields.naziv.touched && tezgaAdresaStore.form.fields.naziv.invalid}
-                        helperText={tezgaAdresaStore.form.fields.naziv.error}
-                        onChange={tezgaAdresaStore.onFieldChange}
+                        value={tezgaStore.form.fields.naziv.value}
+                        error={tezgaStore.form.fields.naziv.touched && tezgaStore.form.fields.naziv.invalid}
+                        helperText={tezgaStore.form.fields.naziv.error}
+                        onChange={tezgaStore.onFieldChange}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -74,10 +74,10 @@ const Adresa = observer(() => {
                         label="Adresa"
                         autoComplete="adresa"
                         fullWidth
-                        value={tezgaAdresaStore.form.fields.adresa.value}
-                        error={tezgaAdresaStore.form.fields.adresa.touched && tezgaAdresaStore.form.fields.adresa.invalid}
-                        helperText={tezgaAdresaStore.form.fields.adresa.error}
-                        onChange={tezgaAdresaStore.onFieldChange}
+                        value={tezgaStore.form.fields.adresa.value}
+                        error={tezgaStore.form.fields.adresa.touched && tezgaStore.form.fields.adresa.invalid}
+                        helperText={tezgaStore.form.fields.adresa.error}
+                        onChange={tezgaStore.onFieldChange}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -88,10 +88,10 @@ const Adresa = observer(() => {
                         autoComplete="napomena"
                         multiline
                         fullWidth
-                        value={tezgaAdresaStore.form.fields.napomena.value}
-                        error={tezgaAdresaStore.form.fields.napomena.touched && tezgaAdresaStore.form.fields.napomena.invalid}
-                        helperText={tezgaAdresaStore.form.fields.napomena.error}
-                        onChange={tezgaAdresaStore.onFieldChange}
+                        value={tezgaStore.form.fields.napomena.value}
+                        error={tezgaStore.form.fields.napomena.touched && tezgaStore.form.fields.napomena.invalid}
+                        helperText={tezgaStore.form.fields.napomena.error}
+                        onChange={tezgaStore.onFieldChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -102,10 +102,10 @@ const Adresa = observer(() => {
                         label="Email"
                         type="email"
                         autoComplete="email"
-                        value={tezgaAdresaStore.form.fields.email.value}
-                        error={tezgaAdresaStore.form.fields.email.touched && tezgaAdresaStore.form.fields.email.invalid}
-                        helperText={tezgaAdresaStore.form.fields.email.error}
-                        onChange={tezgaAdresaStore.onFieldChange}
+                        value={tezgaStore.form.fields.email.value}
+                        error={tezgaStore.form.fields.email.touched && tezgaStore.form.fields.email.invalid}
+                        helperText={tezgaStore.form.fields.email.error}
+                        onChange={tezgaStore.onFieldChange}
                         fullWidth
                     />
                 </Grid>
@@ -117,10 +117,10 @@ const Adresa = observer(() => {
                         label="Telefon"
                         fullWidth
                         autoComplete="telefon"
-                        value={tezgaAdresaStore.form.fields.telefon.value}
-                        error={tezgaAdresaStore.form.fields.telefon.touched && tezgaAdresaStore.form.fields.telefon.invalid}
-                        helperText={tezgaAdresaStore.form.fields.telefon.error}
-                        onChange={tezgaAdresaStore.onFieldChange}
+                        value={tezgaStore.form.fields.telefon.value}
+                        error={tezgaStore.form.fields.telefon.touched && tezgaStore.form.fields.telefon.invalid}
+                        helperText={tezgaStore.form.fields.telefon.error}
+                        onChange={tezgaStore.onFieldChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
@@ -131,10 +131,10 @@ const Adresa = observer(() => {
                         type="url"
                         fullWidth
                         autoComplete="website"
-                        value={tezgaAdresaStore.form.fields.vebsajt.value}
-                        error={tezgaAdresaStore.form.fields.vebsajt.touched && tezgaAdresaStore.form.fields.vebsajt.invalid}
-                        helperText={tezgaAdresaStore.form.fields.vebsajt.error}
-                        onChange={tezgaAdresaStore.onFieldChange}
+                        value={tezgaStore.form.fields.vebsajt.value}
+                        error={tezgaStore.form.fields.vebsajt.touched && tezgaStore.form.fields.vebsajt.invalid}
+                        helperText={tezgaStore.form.fields.vebsajt.error}
+                        onChange={tezgaStore.onFieldChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -148,9 +148,9 @@ const Adresa = observer(() => {
                             // onChange={handleChange('password')}
 
                             name="lozinka"
-                            value={tezgaAdresaStore.form.fields.lozinka.value}
-                            error={tezgaAdresaStore.form.fields.lozinka.touched && tezgaAdresaStore.form.fields.lozinka.invalid}
-                            onChange={tezgaAdresaStore.onFieldChange}
+                            value={tezgaStore.form.fields.lozinka.value}
+                            error={tezgaStore.form.fields.lozinka.touched && tezgaStore.form.fields.lozinka.invalid}
+                            onChange={tezgaStore.onFieldChange}
 
                             endAdornment={
                                 <InputAdornment position="end">

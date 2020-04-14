@@ -22,9 +22,9 @@ const ProductHomeFilter = observer(() => {
 
     const handleChange = (event) => {
         if (event.target.checked) {
-            homeFilterStore.ukljuciPodGrupu(event.target.name)
+            homeFilterStore.ukljuciProizvod(event.target.name)
         } else {
-            homeFilterStore.iskljuciPodGrupu(event.target.name)
+            homeFilterStore.iskljuciProizvod(event.target.name)
         }
     }
 
@@ -33,18 +33,18 @@ const ProductHomeFilter = observer(() => {
             {homeFilterStore.filterGrupa.filter(el => el.izabran).map(grupa => (
                 <FormGroup row key={grupa.kod}>
                     <h2 className={classes.title}>{grupa.naziv}: </h2>
-                    {homeFilterStore.filterPodGrupa.filter(el => el.kodGrupe === grupa.kod).map(podgrupa => (
+                    {homeFilterStore.filterProizvod.filter(el => el.kodGrupe === grupa.kod).map(proizvod => (
                         <FormControlLabel
-                            key={podgrupa.kod}
-                            name={podgrupa.kod}
+                            key={proizvod.kod}
+                            name={proizvod.kod}
                             control={
                                 <Checkbox
-                                    checked={podgrupa.izabran}
+                                    checked={proizvod.izabran}
                                     onChange={handleChange}
                                     color="primary"
                                 />
                             }
-                            label={podgrupa.naziv}
+                            label={proizvod.naziv}
                         />
                     ))}
                 </FormGroup>

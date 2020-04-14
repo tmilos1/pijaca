@@ -1,31 +1,31 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 
-import KarticaRobe from '../../components/KarticaRobe'
+import KarticaKolicinaRobe from '../../components/KarticaKolicinaRobe'
 
-const GrupaKarticaRobe = () => {
+const GrupaKarticaKolicinaRobe = () => {
     return (
         <Grid container spacing={3}>
             <Grid item md={2}>
-                <KarticaRobe />
+                <KarticaKolicinaRobe />
             </Grid>
             <Grid item md={2}>
-                <KarticaRobe />
+                <KarticaKolicinaRobe />
             </Grid>
             <Grid item md={2}>
-                <KarticaRobe />
+                <KarticaKolicinaRobe />
             </Grid>
             <Grid item md={2}>
-                <KarticaRobe />
+                <KarticaKolicinaRobe />
             </Grid>
             <Grid item md={2}>
-                <KarticaRobe />
+                <KarticaKolicinaRobe />
             </Grid>
             <Grid item md={2}>
-                <KarticaRobe />
+                <KarticaKolicinaRobe />
             </Grid>
         </Grid>
     )
 }
 
-export default GrupaKarticaRobe
+export default GrupaKarticaKolicinaRobe

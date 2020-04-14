@@ -7,30 +7,25 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import Typography from '@material-ui/core/Typography'
 
-const UsloviIsporuke = () => {
-    const [nacinDostave, setNacinDostave] = React.useState('dostava')
-    const [kucnaDostava, setKucnaDostava] = React.useState('300din')
+import { observer } from "mobx-react"
+import { useAppContext } from '../../stores/AppContext'
 
-    const handleNacinDostaveChange = (event) => {
-      setNacinDostave(event.target.value)
-    }
-
-    const handleKucnaDostavaChange = (event) => {
-      setKucnaDostava(event.target.value)
-    }
+const UsloviIsporuke = observer(() => {
+    const { tezgaStore } = useAppContext()
 
     return (
         <FormControl component="fieldset">
             <FormLabel component="legend">Izaberite način isporuke:</FormLabel>
-            <RadioGroup aria-label="usloviIsporuke" name="usloviIsporuke" value={nacinDostave} onChange={handleNacinDostaveChange}>
+            <RadioGroup aria-label="usloviIsporuke" name="usloviIsporuke" value={tezgaStore.form.nacinDostave} onChange={tezgaStore.handleNacinDostaveChange}>
                 <FormControlLabel value="dostava" control={<Radio />} label="Dostava" />
                 <Typography variant="subtitle1">
                     Dostava na kućnu adresu. Besplatno preko:
                 </Typography>
 
-                {nacinDostave === 'dostava' ? 
+                {tezgaStore.form.nacinDostave === 'dostava' ? 
                         <FormControl style={{marginLeft: '100px'}} component="fieldset">
-                            <RadioGroup aria-label="usloviIsporuke" name="usloviIsporuke" value={kucnaDostava} onChange={handleKucnaDostavaChange}>
+                            <RadioGroup aria-label="usloviIsporuke" name="usloviIsporuke" value={tezgaStore.form.kucnaDostava} onChange={tezgaStore.handleKucnaDostavaChange}>
+                                <FormControlLabel value="uvek" control={<Radio />} label="Uvek" />
                                 <FormControlLabel value="300din" control={<Radio />} label="300 din" />
                                 <FormControlLabel value="500din" control={<Radio />} label="500 din" />
                                 <FormControlLabel value="700din" control={<Radio />} label="700 din" />
@@ -45,6 +40,6 @@ const UsloviIsporuke = () => {
             </RadioGroup>
         </FormControl>
     )
-}
+})
 
 export default UsloviIsporuke

@@ -5,7 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormGroup from '@material-ui/core/FormGroup'
 
-import GrupaKarticaRobe from '../../containers/GrupaKarticaRobe'
+import GrupaKarticaCenaRobe from '../../containers/GrupaKarticaCenaRobe'
 
 const IzborRobe = () => {
     const [state, setState] = React.useState({
@@ -57,7 +57,7 @@ const IzborRobe = () => {
                         </FormGroup>
                 </Grid>
                 <Grid item xs={12}>
-                    <GrupaKarticaRobe />
+                    <GrupaKarticaCenaRobe />
                 </Grid>
                 <Grid item xs={12} >
                         <FormGroup row>

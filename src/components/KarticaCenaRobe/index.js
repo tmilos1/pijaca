@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 })
 
 
-const KarticaRobe = () => {
+const KarticaCenaRobe = () => {
     const classes = useStyles()
 
     return (
@@ -58,4 +58,4 @@ const KarticaRobe = () => {
     )
 }
 
-export default KarticaRobe
+export default KarticaCenaRobe

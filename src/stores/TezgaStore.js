@@ -4,7 +4,7 @@ import AbstractFormStore from './AbstractFormStore'
 
 Validator.useLang('sr');
 
-class TezgaAdresaStore extends AbstractFormStore {
+class TezgaStore extends AbstractFormStore {
     form = {
         fields: {
             naziv: {
@@ -60,7 +60,10 @@ class TezgaAdresaStore extends AbstractFormStore {
         meta: {
             isValid: false,
             error: null
-        }
+        },
+        nacinDostave: 'dostava',
+        kucnaDostava: '300din',
+        files: [],
     }
 
     //constructor() {
@@ -71,10 +74,23 @@ class TezgaAdresaStore extends AbstractFormStore {
             // passes(false, 'Ovaj email je već korišćen za drugu tezgu.'); // if username is not available
           //});
     //}
+
+    handleNacinDostaveChange = (event) => {
+        this.form.nacinDostave = event.target.value
+    }
+
+    handleKucnaDostavaChange = (event) => {
+        this.form.kucnaDostava = event.target.value
+    }
+
+    handleFilesChange = (files) => {
+        this.form.files = files
+        console.log(files)
+    }
 }
 
-decorate(TezgaAdresaStore, {
+decorate(TezgaStore, {
     form: observable,
 })
 
-export default TezgaAdresaStore
+export default TezgaStore

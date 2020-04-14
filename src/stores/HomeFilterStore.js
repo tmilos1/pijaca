@@ -2,7 +2,7 @@ import { observable, decorate } from "mobx"
 
 class HomeFilterStore {
     filterGrupa = []
-    filterPodGrupa = []
+    filterProizvod = []
 
     constructor() {
         this.fetchData()
@@ -22,37 +22,37 @@ class HomeFilterStore {
                     })
                 }
             })
-        this.filterPodGrupa.push({
+        this.filterProizvod.push({
             kodGrupe: 'POV',
             kod: 'SAR',
             naziv: 'Sargarepa',
             izabran: false
         })
-        this.filterPodGrupa.push({
+        this.filterProizvod.push({
             kodGrupe: 'POV',
             kod: 'KRO',
             naziv: 'Krompir',
             izabran: false
         })
-        this.filterPodGrupa.push({
+        this.filterProizvod.push({
             kodGrupe: 'VOC',
             kod: 'BAN',
             naziv: 'Banana',
             izabran: false
         })
-        this.filterPodGrupa.push({
+        this.filterProizvod.push({
             kodGrupe: 'VOC',
             kod: 'JAB',
             naziv: 'Jabuka',
             izabran: false
         })
-        this.filterPodGrupa.push({
+        this.filterProizvod.push({
             kodGrupe: 'MES',
             kod: 'SLA',
             naziv: 'Slanina',
             izabran: false
         })
-        this.filterPodGrupa.push({
+        this.filterProizvod.push({
             kodGrupe: 'MES',
             kod: 'KOB',
             naziv: 'Kobasica',
@@ -74,24 +74,24 @@ class HomeFilterStore {
         grupa.izabran = false
     }
 
-    ukljuciPodGrupu = (kod) => {
-        const podGrupa = this.filterPodGrupa.find(element => 
+    ukljuciProizvod = (kod) => {
+        const proizvod = this.filterProizvod.find(element => 
             element.kod === kod
         )
-        podGrupa.izabran = true
+        proizvod.izabran = true
     }
 
-    iskljuciPodGrupu = (kod) => {
-        const podGrupa = this.filterPodGrupa.find(element => 
+    iskljuciProizvod = (kod) => {
+        const proizvod = this.filterProizvod.find(element => 
             element.kod === kod
         )
-        podGrupa.izabran = false
+        proizvod.izabran = false
     }
 }
 
 decorate(HomeFilterStore, {
     filterGrupa: observable,
-    filterPodGrupa: observable,
+    filterProizvod: observable,
 })
 
 export default HomeFilterStore

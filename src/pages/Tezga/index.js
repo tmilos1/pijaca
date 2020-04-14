@@ -12,7 +12,7 @@ import '@brainhubeu/react-carousel/lib/style.css'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import GrupaKarticaRobe from '../../containers/GrupaKarticaRobe'
+import GrupaKarticaKolicinaRobe from '../../containers/GrupaKarticaKolicinaRobe'
 import NaruciForma from '../../components/NaruciForma'
 
 const useStyles = makeStyles((theme) => ({
@@ -89,7 +89,7 @@ const Tezga = () => {
                                 </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <GrupaKarticaRobe />
+                            <GrupaKarticaKolicinaRobe />
                         </Grid>
                     </Grid>
 
@@ -102,7 +102,7 @@ const Tezga = () => {
                                 </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <GrupaKarticaRobe />
+                            <GrupaKarticaKolicinaRobe />
                         </Grid>
                     </Grid>
 
