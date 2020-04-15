@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -64,16 +64,34 @@ function getStepContent(step) {
 const Wizard = observer(() => {
     const classes = useStyles()
     const { tezgaStore } = useAppContext()
+    const { appStore } = useAppContext()
 
     const [activeStep, setActiveStep] = React.useState(0)
 
-    const handleNext = () => {
+    const handleNext = async () => {
+        if (activeStep === 3) {
+            const captcha_token = await window.grecaptcha.execute(
+                "6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud", { action: "registracija" }
+            )
+
+            await tezgaStore.saveData(captcha_token, appStore.grad, appStore.kod_grada)
+        }
+
         setActiveStep(activeStep + 1)
     }
 
     const handleBack = () => {
         setActiveStep(activeStep - 1)
     }
+
+    useEffect(() => {
+        // Add reCaptcha
+        const script = document.createElement("script")
+        script.src = "https://www.google.com/recaptcha/api.js?render=6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud"
+        // script.addEventListener("load", handleLoaded)
+        document.body.appendChild(script)
+    }, [])
+
 
     let nextButtonVisible = null
     switch (activeStep) {

@@ -1,6 +1,7 @@
 import { observable, decorate } from "mobx"
 import Validator from 'validatorjs'
 import AbstractFormStore from './AbstractFormStore'
+import { API_URL } from './apiConf'
 
 Validator.useLang('sr');
 
@@ -14,14 +15,14 @@ class TezgaStore extends AbstractFormStore {
                 invalid: false,
                 error: '',
             },
-            adresa: {
+            napomena: {
                 rule: 'string',
                 touched: false,
                 value: '',
                 invalid: false,
                 error: '',
             },
-            napomena: {
+            adresa: {
                 rule: 'string',
                 touched: false,
                 value: '',
@@ -35,15 +36,15 @@ class TezgaStore extends AbstractFormStore {
                 invalid: false,
                 error: '',
             },
-            telefon: {
-                rule: 'required|string',
+            vebsajt: {
+                rule: 'url',
                 touched: false,
                 value: '',
                 invalid: false,
                 error: '',
             },
-            vebsajt: {
-                rule: 'url',
+            telefon: {
+                rule: 'required|string',
                 touched: false,
                 value: '',
                 invalid: false,
@@ -56,13 +57,20 @@ class TezgaStore extends AbstractFormStore {
                 invalid: false,
                 error: '',
             },
+            primedba: {
+                rule: 'string',
+                touched: false,
+                value: '',
+                invalid: false,
+                error: '',
+            },
         },
         meta: {
             isValid: false,
             error: null
         },
-        nacinDostave: 'dostava',
-        kucnaDostava: '300din',
+        nacin_dostave: 'dostava',
+        kucna_isporuka: '300din',
         files: [],
         grupe: [],
         proizvodi: []
@@ -80,7 +88,7 @@ class TezgaStore extends AbstractFormStore {
     }
 
     fetchData = () => {
-        fetch('http://localhost:5000/grupe')
+        fetch(API_URL + '/grupe')
             .then((response) => {
                 return response.json()
             })
@@ -95,12 +103,39 @@ class TezgaStore extends AbstractFormStore {
             })
     }
 
-    handleNacinDostaveChange = (event) => {
-        this.form.nacinDostave = event.target.value
+    saveData = async (captcha_token, grad, kod_grada) => {
+        const response = await fetch(API_URL + '/registracija', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                captcha_token,
+                naziv: this.form.fields.naziv.value,
+                napomena: this.form.fields.napomena.value,
+                nacin_dostave: this.form.nacin_dostave,
+                kucna_isporuka: this.form.kucna_isporuka,
+                adresa: this.form.fields.adresa.value,
+                grad: grad,
+                kod_grada: kod_grada,
+                email: this.form.fields.email.value,
+                vebsajt: this.form.fields.vebsajt.value,
+                telefon: this.form.fields.telefon.value,
+                lozinka: this.form.fields.lozinka.value,
+                primedba: this.form.fields.primedba.value,
+            })
+        })
+
+        return response.json()
     }
 
-    handleKucnaDostavaChange = (event) => {
-        this.form.kucnaDostava = event.target.value
+    handleNacinDostaveChange = (event) => {
+        this.form.nacin_dostave = event.target.value
+    }
+
+    handleKucnaIsporukaChange = (event) => {
+        this.form.kucna_isporuka = event.target.value
     }
 
     handleFilesChange = (files) => {
@@ -116,6 +151,34 @@ class TezgaStore extends AbstractFormStore {
         } else {
             grupa.izabran = true
         }
+    }
+
+    // prepare for file delete from server. check if each file exists, and if exists trigger delete
+    // only for logged in users
+    handleOnFileDelete = (file) => {
+
+    }
+
+    getTextUsloviIsporuke = () => {
+        if (this.form.nacin_dostave === 'dostava') {
+            switch (this.form.fields.kucna_isporuka) {
+                default:
+                case 'uvek':
+                    return "Besplatna dostava na kućnu adresu."
+                case '300din':
+                    return "Dostava na kućnu adresu. Besplatno za isnos preko 300din."
+                case '500din':
+                    return "Dostava na kućnu adresu. Besplatno za isnos preko 500din."
+                case '700din':
+                    return "Dostava na kućnu adresu. Besplatno za isnos preko 700din."
+            }
+        } else {
+            return "Preuzimanje kod nas na gazdinstvu."
+        }
+    }
+
+    setUsloviIsporuke = () => {
+
     }
 }
 

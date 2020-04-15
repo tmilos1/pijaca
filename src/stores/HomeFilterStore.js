@@ -1,4 +1,5 @@
 import { observable, decorate } from "mobx"
+import { API_URL } from './apiConf'
 
 class HomeFilterStore {
     filterGrupa = []
@@ -9,7 +10,7 @@ class HomeFilterStore {
     }
 
     fetchData = () => {
-        fetch('http://localhost:5000/grupe')
+        fetch(API_URL + '/grupe')
             .then((response) => {
                 return response.json()
             })

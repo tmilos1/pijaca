@@ -51,7 +51,7 @@ function Tezge() {
                             />
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom variant="h5" component="h2">
-                                    Tezga 123
+                                    Slobodna tezga 
                                 </Typography>
                                 <Typography>
                                     Ovo je mesto za Vašu tezgu. Prijavite se besplatno!

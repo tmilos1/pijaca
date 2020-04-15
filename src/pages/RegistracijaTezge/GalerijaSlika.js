@@ -18,6 +18,8 @@ const GalerijaSlika = observer(() => {
             <DropzoneArea onChange={tezgaStore.handleFilesChange} filesLimit={10}
                 dropzoneText="Prevucite i spustite željene slike ili kliknite"
                 getFileAddedMessage={(fileName) => `Uspešno ste dodali fajl ${fileName}.`}
+                initialFiles={tezgaStore.form.files.map(file => URL.createObjectURL(file))}
+                onDelete={tezgaStore.handleOnFileDelete}
             />
         </>
     )

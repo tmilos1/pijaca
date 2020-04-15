@@ -16,8 +16,9 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
 import Home from './pages/Home'
+import Prijava from './pages/Prijava'
 import Tezga from './pages/Tezga'
-import Wizard from './pages/PrijavaTezge/Wizard'
+import Wizard from './pages/RegistracijaTezge/Wizard'
 import Footer from './components/Footer'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -63,6 +64,10 @@ function App() {
 
           <Route path="/prijava-tezge">
             <Wizard />
+          </Route>
+
+          <Route path="/prijava">
+            <Prijava />
           </Route>
 
           <Route path="/">

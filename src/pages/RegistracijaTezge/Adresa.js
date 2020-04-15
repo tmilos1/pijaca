@@ -141,9 +141,6 @@ const Adresa = observer(() => {
                             required
                             id="standard-adornment-password"
                             type={values.showPassword ? 'text' : 'password'}
-                            // value={values.password}
-                            // onChange={handleChange('password')}
-
                             name="lozinka"
                             value={tezgaStore.form.fields.lozinka.value}
                             error={tezgaStore.form.fields.lozinka.touched && tezgaStore.form.fields.lozinka.invalid}

@@ -16,15 +16,15 @@ const UsloviIsporuke = observer(() => {
     return (
         <FormControl component="fieldset">
             <FormLabel component="legend">Izaberite način isporuke:</FormLabel>
-            <RadioGroup aria-label="usloviIsporuke" name="usloviIsporuke" value={tezgaStore.form.nacinDostave} onChange={tezgaStore.handleNacinDostaveChange}>
+            <RadioGroup aria-label="Uslovi isporuke" name="nacin_dostave" value={tezgaStore.form.nacin_dostave} onChange={tezgaStore.handleNacinDostaveChange}>
                 <FormControlLabel value="dostava" control={<Radio />} label="Dostava" />
                 <Typography variant="subtitle1">
                     Dostava na kućnu adresu. Besplatno preko:
                 </Typography>
 
-                {tezgaStore.form.nacinDostave === 'dostava' ? 
+                {tezgaStore.form.nacin_dostave === 'dostava' ? 
                         <FormControl style={{marginLeft: '100px'}} component="fieldset">
-                            <RadioGroup aria-label="usloviIsporuke" name="usloviIsporuke" value={tezgaStore.form.kucnaDostava} onChange={tezgaStore.handleKucnaDostavaChange}>
+                            <RadioGroup aria-label="Kucna isporuka" name="kucna_isporuka" value={tezgaStore.form.kucna_isporuka} onChange={tezgaStore.handleKucnaIsporukaChange}>
                                 <FormControlLabel value="uvek" control={<Radio />} label="Uvek" />
                                 <FormControlLabel value="300din" control={<Radio />} label="300 din" />
                                 <FormControlLabel value="500din" control={<Radio />} label="500 din" />

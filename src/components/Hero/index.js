@@ -18,19 +18,19 @@ const Hero = () => {
 
     return (
         <div className={classes.heroContent}>
-            <Container maxWidth="sm">
+            <Container maxWidth="md">
                 <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                    Besplatna prijava!
+                    Besplatna registracija!
                 </Typography>
                 <Typography variant="h5" align="center" color="textSecondary" paragraph>
                     Ukoliko prodajete voće, povrće ili bilo šta na pijaci, ovde možete besplatno postaviti,
-                    Vašu digitalnu tezgu.
+                    Vašu digitalnu tezgu. Jednostavno u 4 koraka.
                 </Typography>
                 <div className={classes.heroButtons}>
                     <Grid container spacing={2} justify="center">
                         <Grid item>
                             <Button variant="contained" color="primary" component={Link} to={'/prijava-tezge'}>
-                                Prijava tezge!
+                                Registruj se!
                             </Button>
                         </Grid>
                     </Grid>
