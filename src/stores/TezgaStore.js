@@ -130,6 +130,18 @@ class TezgaStore extends AbstractFormStore {
         return response.json()
     }
 
+    uploadFiles = async (tezga_id) => {
+        for await (const file of this.form.files) {
+            const formData = new FormData()
+            formData.append('file', file)
+
+            await fetch(API_URL + '/upload_anon/' + tezga_id, {
+                method: 'POST',
+                body: formData
+            })
+        }
+    }
+
     handleNacinDostaveChange = (event) => {
         this.form.nacin_dostave = event.target.value
     }
@@ -151,12 +163,6 @@ class TezgaStore extends AbstractFormStore {
         } else {
             grupa.izabran = true
         }
-    }
-
-    // prepare for file delete from server. check if each file exists, and if exists trigger delete
-    // only for logged in users
-    handleOnFileDelete = (file) => {
-
     }
 
     getTextUsloviIsporuke = () => {

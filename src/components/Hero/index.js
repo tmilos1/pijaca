@@ -23,7 +23,7 @@ const Hero = () => {
                     Besplatna registracija!
                 </Typography>
                 <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                    Ukoliko prodajete voće, povrće ili bilo šta na pijaci, ovde možete besplatno postaviti,
+                    Ukoliko prodajete voće, povrće ili bilo šta na pijaci, ovde možete besplatno postaviti
                     Vašu digitalnu tezgu. Jednostavno u 4 koraka.
                 </Typography>
                 <div className={classes.heroButtons}>

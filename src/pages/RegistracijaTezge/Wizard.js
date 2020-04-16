@@ -74,7 +74,9 @@ const Wizard = observer(() => {
                 "6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud", { action: "registracija" }
             )
 
-            await tezgaStore.saveData(captcha_token, appStore.grad, appStore.kod_grada)
+            const { last_id } = await tezgaStore.saveData(captcha_token, appStore.grad, appStore.kod_grada)
+            console.log(last_id)
+            await tezgaStore.uploadFiles(last_id)
         }
 
         setActiveStep(activeStep + 1)
