@@ -49,11 +49,11 @@ const steps = ['Podaci o prodavcu', 'Uslovi isporuke', 'Galerija slika', 'Izbor 
 function getStepContent(step) {
     switch (step) {
         case 0:
-            // return <Adresa />
+            return <Adresa />
         case 1:
-            // return <UsloviIsporuke />
+            return <UsloviIsporuke />
         case 2:
-            // return <GalerijaSlika />
+            return <GalerijaSlika />
         case 3:
             return <IzborRobe />
         default:

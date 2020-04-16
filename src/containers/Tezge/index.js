@@ -24,12 +24,26 @@ const useStyles = makeStyles((theme) => ({
     },
     cardMedia: {
         paddingTop: '56.25%', // 16:9
+        // paddingTop: '100%', // 16:9
+        // marginBottom: '20%', // 16:9
+        marginTop: '10px',
+        height: "100px",
+        backgroundSize: "contain",
     },
     cardContent: {
         flexGrow: 1,
     },
 }))
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max))
+}
+   
+function getStandImage(cardNo) {
+    const random = getRandomInt(4) + 1
+    // const random = cardNo % 4 + 1
+    return `images/tezga00${random}.png`
+}
 
 function Tezge() {
     const classes = useStyles()
@@ -46,13 +60,13 @@ function Tezge() {
                         <Card className={classes.card}>
                             <CardMedia
                                 className={classes.cardMedia}
-                                image="images/fruit-stand.png"
+                                image={getStandImage(card)}
                                 title="Image title"
                             />
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom variant="h5" component="h2">
-                                    Slobodna tezga 
-                                </Typography>
+                                    Slobodna tezga
+                                </Typography> 
                                 <Typography>
                                     Ovo je mesto za Vašu tezgu. Prijavite se besplatno!
                                 </Typography>
