@@ -1,4 +1,4 @@
-import { observable, decorate } from "mobx"
+import { observable, computed, decorate } from "mobx"
 import Validator from 'validatorjs'
 import AbstractFormStore from './AbstractFormStore'
 import { API_URL } from './apiConf'
@@ -101,6 +101,25 @@ class TezgaStore extends AbstractFormStore {
                     })
                 }
             })
+
+        fetch(API_URL + '/proizvodi')
+            .then((response) => {
+                return response.json()
+            })
+            .then(data => {
+                for (const row of data) {
+                    this.form.proizvodi.push({
+                        kod: row.kod,
+                        kod_grupe: row.kod_grupe,
+                        naziv: row.naziv,
+                        opis_cene: row.opis_cene,
+                        slika_proizvoda: row.slika_proizvoda,
+                        cena: 0.00,
+                        napomena: "",
+                        izabran: false
+                    })
+                }
+            })
     }
 
     saveData = async (captcha_token, grad, kod_grada) => {
@@ -163,6 +182,25 @@ class TezgaStore extends AbstractFormStore {
         } else {
             grupa.izabran = true
         }
+    }
+
+    handleProizvodChange = (event) => {
+        const izabraniKod = event.target.name
+        const proizvod = this.form.proizvodi.find(el => el.kod === izabraniKod)
+
+        if (proizvod.izabran) {
+            proizvod.izabran = false
+        } else {
+            proizvod.izabran = true
+        }
+    }
+
+    onProizvodNapomenaChange = (field) => {
+        const fieldValue = field.target.value
+        const izabraniKod = field.target.name
+
+        const proizvod = this.form.proizvodi.find(el => el.kod === izabraniKod)
+        proizvod.napomena = fieldValue
     }
 
     getTextUsloviIsporuke = () => {

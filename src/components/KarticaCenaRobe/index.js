@@ -12,6 +12,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import TextField from '@material-ui/core/TextField'
 
+import { observer } from "mobx-react"
+import { useAppContext } from '../../stores/AppContext'
+
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
@@ -19,43 +22,67 @@ const useStyles = makeStyles({
     media: {
         height: 140,
     },
+    title: {
+        minHeight: 80,
+    },
 })
 
 
-const KarticaCenaRobe = () => {
+const KarticaCenaRobe = observer((props) => {
     const classes = useStyles()
+
+    const { tezgaStore } = useAppContext()
 
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image="https://source.unsplash.com/random"
-                    title="Contemplative Reptile"
+                    image={props.proizvod.slika_proizvoda}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        Banane
+                    <Typography gutterBottom variant="h6" component="h2" className={classes.title}>
+                        {props.proizvod.naziv}
                     </Typography>
 
                     <FormControlLabel
                         control={
                             <Checkbox
-                                name="checkedB"
+                                checked={props.proizvod.izabran}
+                                onChange={tezgaStore.handleProizvodChange}
+                                name={props.proizvod.kod}
                                 color="primary"
                             />
                         }
                         label="u ponudi"
                     />
+                    <TextField
+                        id="napomena"
+                        name={props.proizvod.kod}
+                        label="Napomena"
+                        autoComplete="napomena"
+                        multiline
+                        fullWidth
+                        rows={2}
+
+                        value={props.proizvod.napomena.value}
+                        error={props.proizvod.napomena.touched && props.proizvod.napomena.invalid}
+                        helperText={props.proizvod.napomena.error}
+                        onChange={tezgaStore.onProizvodNapomenaChange}
+                    />
                 </CardContent>
             </CardActionArea>
             <CardActions>
                 <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="standard-basic" label="Cena po kg" />
+                    <TextField
+                        id="standard-basic" 
+                        label={props.proizvod.opis_cene}
+                        type="number"
+                    />
                 </form>
             </CardActions>
         </Card>
     )
-}
+})
 
 export default KarticaCenaRobe
