@@ -70,12 +70,12 @@ const Wizard = observer(() => {
 
     const handleNext = async () => {
         if (activeStep === 3) {
-            const captcha_token = await window.grecaptcha.execute(
-                "6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud", { action: "registracija" }
+            const save_captcha_token = await window.grecaptcha.execute(
+                "6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud", { action: "registracija_save" }
             )
 
-            const { last_id } = await tezgaStore.saveData(captcha_token, appStore.grad, appStore.kod_grada)
-            console.log(last_id)
+            const { last_id } = await tezgaStore.saveData(save_captcha_token, appStore.grad, appStore.kod_grada)
+
             await tezgaStore.uploadFiles(last_id)
         }
 
@@ -111,7 +111,7 @@ const Wizard = observer(() => {
             <Paper className={classes.paper}>
                 <Typography component="h1" variant="h4" align="center">
                     Prijava nove tezge!
-          </Typography>
+                </Typography>
                 <Stepper activeStep={activeStep} className={classes.stepper}>
                     {steps.map((label) => (
                         <Step key={label}>

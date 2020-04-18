@@ -30,7 +30,7 @@ class TezgaStore extends AbstractFormStore {
                 error: '',
             },
             email: {
-                rule: 'required|email',
+                rule: 'required|email|email_available',
                 touched: false,
                 value: '',
                 invalid: false,
@@ -73,17 +73,40 @@ class TezgaStore extends AbstractFormStore {
         kucna_isporuka: '300din',
         files: [],
         grupe: [],
-        proizvodi: []
+        proizvodi: [],
+        kod_grada: 'KS'
     }
 
     constructor() {
         super()
-        // Validator.registerAsync('email_available', function(username, attribute, req, passes) {
-        //     // do your database/api checks here etc
-        //     // then call the `passes` method where appropriate:
-        //     passes(); // if username is available
-        //     passes(false, 'Ovaj email je već korišćen za drugu tezgu.'); // if username is not available
-        //   });
+
+        Validator.registerAsync('email_available', function (email, attribute, req, passes) {
+            const emailValidator = new Validator({email: email}, {email: 'email'})
+
+            if (emailValidator.fails()) {
+                passes()
+                return
+            }
+
+            let url = new URL(API_URL + '/registracija/email_available'),
+                params = { email }
+
+            Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+            fetch(url)
+                .then((response) => {
+                    return response.json()
+                })
+                .then(data => {
+                    console.log(data)
+                    if (data.email_available) {
+                        passes()
+                        return
+                    }
+
+                    passes(false, 'Ovaj email je već korišćen za drugu tezgu.'); 
+                })
+        })
         this.fetchData()
     }
 
@@ -143,6 +166,7 @@ class TezgaStore extends AbstractFormStore {
                 telefon: this.form.fields.telefon.value,
                 lozinka: this.form.fields.lozinka.value,
                 primedba: this.form.fields.primedba.value,
+                proizvodi: this.form.proizvodi.filter(pr => pr.izabran === true),
             })
         })
 
@@ -195,12 +219,20 @@ class TezgaStore extends AbstractFormStore {
         }
     }
 
-    onProizvodNapomenaChange = (field) => {
+    handleProizvodNapomenaChange = (field) => {
         const fieldValue = field.target.value
         const izabraniKod = field.target.name
 
         const proizvod = this.form.proizvodi.find(el => el.kod === izabraniKod)
         proizvod.napomena = fieldValue
+    }
+
+    handleProizvodCenaChange = (field) => {
+        const fieldValue = field.target.value
+        const izabraniKod = field.target.name
+
+        const proizvod = this.form.proizvodi.find(el => el.kod === izabraniKod)
+        proizvod.cena = fieldValue
     }
 
     getTextUsloviIsporuke = () => {

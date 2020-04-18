@@ -68,7 +68,7 @@ const KarticaCenaRobe = observer((props) => {
                         value={props.proizvod.napomena.value}
                         error={props.proizvod.napomena.touched && props.proizvod.napomena.invalid}
                         helperText={props.proizvod.napomena.error}
-                        onChange={tezgaStore.onProizvodNapomenaChange}
+                        onChange={tezgaStore.handleProizvodNapomenaChange}
                     />
                 </CardContent>
             </CardActionArea>
@@ -76,8 +76,12 @@ const KarticaCenaRobe = observer((props) => {
                 <form className={classes.root} noValidate autoComplete="off">
                     <TextField
                         id="standard-basic" 
+                        name={props.proizvod.kod}
                         label={props.proizvod.opis_cene}
                         type="number"
+
+                        value={props.proizvod.cena}
+                        onChange={tezgaStore.handleProizvodCenaChange}
                     />
                 </form>
             </CardActions>

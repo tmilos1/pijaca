@@ -23,15 +23,33 @@ class AbstractFormStore {
         )
 
         this.form.fields[fieldName].touched = true
-        this.form.fields[fieldName].invalid = !fieldValidation.passes()
-        this.form.fields[fieldName].error = fieldValidation.errors.first(fieldName)
 
-        var validation = new Validator(
+        const fieldPasses = () => {
+            this.form.fields[fieldName].invalid = false
+            this.form.fields[fieldName].error = ''
+        }
+
+        const fieldFails = () => {
+            this.form.fields[fieldName].invalid = true
+            this.form.fields[fieldName].error = fieldValidation.errors.first(fieldName)
+        }
+
+        fieldValidation.checkAsync(fieldPasses, fieldFails)
+
+        var fullValidation = new Validator(
             this.getFlattenedValues('value'),
             this.getFlattenedValues('rule')
         )
 
-        this.form.meta.isValid = validation.passes()
+        const fullPasses = () => {
+            this.form.meta.isValid = true
+        }
+
+        const fullFails = () => {
+            this.form.meta.isValid = false
+        }
+
+        fullValidation.checkAsync(fullPasses, fullFails)
     }
 
 }
