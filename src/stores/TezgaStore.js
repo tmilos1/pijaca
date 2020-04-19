@@ -107,10 +107,10 @@ class TezgaStore extends AbstractFormStore {
                     passes(false, 'Ovaj email je već korišćen za drugu tezgu.'); 
                 })
         })
-        this.fetchData()
     }
 
     fetchData = () => {
+        this.form.grupe = []
         fetch(API_URL + '/grupe')
             .then((response) => {
                 return response.json()
@@ -125,6 +125,7 @@ class TezgaStore extends AbstractFormStore {
                 }
             })
 
+        this.form.proizvodi = []
         fetch(API_URL + '/proizvodi')
             .then((response) => {
                 return response.json()

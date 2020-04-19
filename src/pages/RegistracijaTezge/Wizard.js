@@ -92,6 +92,8 @@ const Wizard = observer(() => {
         script.src = "https://www.google.com/recaptcha/api.js?render=6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud"
         // script.addEventListener("load", handleLoaded)
         document.body.appendChild(script)
+
+        tezgaStore.fetchData()
     }, [])
 
 
