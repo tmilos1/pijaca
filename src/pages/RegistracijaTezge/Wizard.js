@@ -87,14 +87,8 @@ const Wizard = observer(() => {
     }
 
     useEffect(() => {
-        // Add reCaptcha
-        const script = document.createElement("script")
-        script.src = "https://www.google.com/recaptcha/api.js?render=6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud"
-        // script.addEventListener("load", handleLoaded)
-        document.body.appendChild(script)
-
         tezgaStore.fetchData()
-    }, [])
+    }, [tezgaStore])
 
 
     let nextButtonVisible = null
@@ -129,7 +123,7 @@ const Wizard = observer(() => {
                             </Typography>
                             <Typography variant="subtitle1">
                                 Nakon što pregledamo prijavu, pojaviće se na sajtu.
-                                Sve porudžbine dobijaćete putem email-a.
+                                Sve narudžbine dobijaćete putem email-a.
                             </Typography>
                             <br />
                             <Button variant="contained" color="primary" component={Link} to={'/'}>
@@ -152,7 +146,7 @@ const Wizard = observer(() => {
                                         className={classes.button}
                                         disabled={!nextButtonVisible}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Podnesi prijavu' : 'Sledeće'}
+                                        {activeStep === steps.length - 1 ? 'Prijavi tezgu' : 'Sledeće'}
                                     </Button>
                                 </div>
                             </React.Fragment>

@@ -37,28 +37,10 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
 }))
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max))
-}
    
-function getStandImage() {
-    const random = getRandomInt(4) + 1
-    return `images/tezga00${random}.png`
-}
-
 const Tezge = observer(() => {
     const classes = useStyles()
     const { homeFilterStore } = useAppContext()
-
-    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-
-    const demoKartica = {
-        id: 99999,
-        naziv: 'Slobodna tezga',
-        napomena: 'Ovo je mesto za Vašu tezgu. Prijavite se besplatno!',
-        slika: getStandImage()
-    }
 
     return (
         <Container className={classes.cardGrid} maxWidth="lg">

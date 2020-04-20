@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Link } from "react-router-dom"
 
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
@@ -12,6 +13,9 @@ import '@brainhubeu/react-carousel/lib/style.css'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+import { observer } from "mobx-react"
+import { useAppContext } from '../../stores/AppContext'
+
 import GrupaKarticaKolicinaRobe from '../../containers/GrupaKarticaKolicinaRobe'
 import NaruciForma from '../../components/NaruciForma'
 
@@ -24,9 +28,20 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Tezga = () => {
+const Tezga = observer(() => {
     const classes = useStyles()
     let { tezgaId } = useParams()
+    const { orderStore } = useAppContext()
+
+    useEffect(() => {
+        orderStore.fetchData(tezgaId)
+    }, [orderStore, tezgaId])
+
+    let naruciVisible = null
+
+    if (orderStore.form.meta.isValid && orderStore.iznos > 0) {
+        naruciVisible = true
+    }
 
     return (
         <main>
@@ -34,25 +49,30 @@ const Tezga = () => {
                 <Container >
                     <Paper className={classes.paperPadding}>
                         <Typography variant="h3">
-                            Tezga br. {tezgaId}
+                            Tezga br. {orderStore.tezga.id}
                         </Typography>
                     </Paper>
                     <br />
                     <Paper className={classes.paperPadding}>
                         <Typography variant="h6">
-                            Ime ili Naziv
-                </Typography>
+                            {orderStore.tezga.naziv}
+                        </Typography>
                         <Typography variant="h6">
-                            Telefon:
-                </Typography>
+                            Telefon: {orderStore.tezga.telefon}
+                        </Typography>
                         <Typography variant="h6">
-                            Email:
-                </Typography>
+                            Email: {orderStore.tezga.email}
+                        </Typography>
+                        <br />
+                        <br />
+                        <Typography variant="h6">
+                            {orderStore.tezga.napomena.substr(0, 200)}
+                        </Typography>
                     </Paper>
                     <br />
                     <Paper className={classes.paperPadding}>
                         <Typography variant="h6">
-                            Uslovi isporuke:
+                            Uslovi isporuke: {orderStore.textUsloviIsporuke}
                         </Typography>
                     </Paper>
                     <br />
@@ -71,66 +91,78 @@ const Tezga = () => {
                             }
                         }}
                     >
-                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
-                        <img alt="random" width="400" height="300" src="https://source.unsplash.com/random" />
+                        {orderStore.tezga.slike.map(slika => (
+                            <img key={slika.url} alt="random" width="400" height="300" src={slika.url} />
+                        ))}
                     </Carousel>
 
                     <br />
                     <br />
                     <Paper className={classes.paperPadding}>
-                    <Grid container spacing={3}>
+                    {orderStore.tezga.grupe.map(grupa => (
+                    <Grid container spacing={3} key={grupa.kod}>
                         <Grid item xs={12} >
                                 <Typography variant="h6">
-                                    Povrće
+                                    {grupa.naziv}
                                 </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <GrupaKarticaKolicinaRobe />
+                            <GrupaKarticaKolicinaRobe kodGrupe={grupa.kod} />
                         </Grid>
                     </Grid>
-
-                    <br />
-                    <br />
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} >
-                                <Typography variant="h6">
-                                    Voće
-                                </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <GrupaKarticaKolicinaRobe />
-                        </Grid>
-                    </Grid>
+                    ))}
 
                     <br />
                         <Typography variant="h6">
-                            Ukupan iznos porudžbine: 1200,00 din.
+                            Ukupan iznos narudžbine: {orderStore.iznos} din.
                         </Typography>
                     </Paper>
                     <br />
                     <br />
                     <br />
                     <Paper className={classes.paperPadding}>
-                        <NaruciForma />
+                        {orderStore.naruceno ?
+                        (
+                                <>
+                                <Typography variant="h5" gutterBottom>
+                                    Hvala na narudžbini!
+                                </Typography>
+                                <br />
+                                <br />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    component={Link} to={'/'}
+                                >
+                                    Početna strana
+                                </Button>
+                            </>
+                        )
+                            :
+                        (
+                            <>
+                                <NaruciForma />
+                                <br />
+                                <br />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    onClick={orderStore.handleNaruciClick}
+                                    disabled={!naruciVisible}
+                                >
+                                    Naruči
+                                </Button>
+                            </>
+                        )
+                        }
             
-                        <br />
-                        <br />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.button}
-                        >
-                            Naruči
-                        </Button>
                     </Paper>
             </Container>
             </div>
         </main>
     )
-}
+})
 
 export default Tezga

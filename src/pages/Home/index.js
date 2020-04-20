@@ -37,7 +37,7 @@ const Home = () => {
               <Grid className={classes.mainContainer__Filter} item xs={12}>
                 <GroupHomeFilter />
               </Grid>
-              <Grid classNamain={classes.mainContainer__Filter} item xs={12}>
+              <Grid className={classes.mainContainer__Filter} item xs={12}>
                 <ProductHomeFilter />
               </Grid>
             </Grid>

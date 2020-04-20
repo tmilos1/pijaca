@@ -54,7 +54,7 @@ const KarticaCenaRobe = observer((props) => {
                                 color="primary"
                             />
                         }
-                        label="u ponudi"
+                        label="U ponudi"
                     />
                     <TextField
                         id="napomena"

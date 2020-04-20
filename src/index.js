@@ -28,6 +28,12 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 )
+//
+// Add reCaptcha
+const script = document.createElement("script")
+script.src = "https://www.google.com/recaptcha/api.js?render=6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud"
+// script.addEventListener("load", handleLoaded)
+document.body.appendChild(script)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

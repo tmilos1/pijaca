@@ -3,7 +3,13 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 
-const NaruciForma = () => {
+import { observer } from "mobx-react"
+import { useAppContext } from '../../stores/AppContext'
+
+const NaruciForma = observer(() => {
+
+    const { orderStore } = useAppContext()
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -17,6 +23,10 @@ const NaruciForma = () => {
                         label="Ime i prezime"
                         fullWidth
                         autoComplete="ime"
+                        value={orderStore.form.fields.naziv.value}
+                        error={orderStore.form.fields.naziv.touched && orderStore.form.fields.naziv.invalid}
+                        helperText={orderStore.form.fields.naziv.error}
+                        onChange={orderStore.onFieldChange}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -26,6 +36,10 @@ const NaruciForma = () => {
                         label="Adresa"
                         autoComplete="adresa"
                         fullWidth
+                        value={orderStore.form.fields.adresa.value}
+                        error={orderStore.form.fields.adresa.touched && orderStore.form.fields.adresa.invalid}
+                        helperText={orderStore.form.fields.adresa.error}
+                        onChange={orderStore.onFieldChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -36,6 +50,10 @@ const NaruciForma = () => {
                         label="Telefon"
                         fullWidth
                         autoComplete="telefon"
+                        value={orderStore.form.fields.telefon.value}
+                        error={orderStore.form.fields.telefon.touched && orderStore.form.fields.telefon.invalid}
+                        helperText={orderStore.form.fields.telefon.error}
+                        onChange={orderStore.onFieldChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -45,12 +63,31 @@ const NaruciForma = () => {
                         label="Email"
                         autoComplete="email"
                         fullWidth
+                        value={orderStore.form.fields.email.value}
+                        error={orderStore.form.fields.email.touched && orderStore.form.fields.email.invalid}
+                        helperText={orderStore.form.fields.email.error}
+                        onChange={orderStore.onFieldChange}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={12} md={7}>
+                    <TextField
+                        id="napomena"
+                        name="napomena"
+                        label="Napomena"
+                        autoComplete="napomena"
+                        multiline
+                        fullWidth
+                        value={orderStore.form.fields.napomena.value}
+                        error={orderStore.form.fields.napomena.touched && orderStore.form.fields.napomena.invalid}
+                        helperText={orderStore.form.fields.napomena.error}
+                        onChange={orderStore.onFieldChange}
                     />
                 </Grid>
             </Grid>
         </React.Fragment>
     )
-}
+})
+
 
 export default NaruciForma
 

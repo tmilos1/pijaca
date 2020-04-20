@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocation } from "react-router-dom"
 import './App.css'
 
 import {
@@ -36,6 +37,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
 function App() {
   const classes = useStyles()
 
@@ -43,6 +54,8 @@ function App() {
     <React.Fragment>
       <CssBaseline />
       <Router>
+        <ScrollToTop />
+
         <AppBar className={classes.appTitle} position="relative">
           <Container >
             <Toolbar>

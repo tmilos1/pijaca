@@ -1,4 +1,4 @@
-import { observable, computed, decorate } from "mobx"
+import { observable, decorate } from "mobx"
 import Validator from 'validatorjs'
 import AbstractFormStore from './AbstractFormStore'
 import { API_URL } from './apiConf'
@@ -234,28 +234,6 @@ class TezgaStore extends AbstractFormStore {
 
         const proizvod = this.form.proizvodi.find(el => el.kod === izabraniKod)
         proizvod.cena = fieldValue
-    }
-
-    getTextUsloviIsporuke = () => {
-        if (this.form.nacin_dostave === 'dostava') {
-            switch (this.form.fields.kucna_isporuka) {
-                default:
-                case 'uvek':
-                    return "Besplatna dostava na kućnu adresu."
-                case '300din':
-                    return "Dostava na kućnu adresu. Besplatno za isnos preko 300din."
-                case '500din':
-                    return "Dostava na kućnu adresu. Besplatno za isnos preko 500din."
-                case '700din':
-                    return "Dostava na kućnu adresu. Besplatno za isnos preko 700din."
-            }
-        } else {
-            return "Preuzimanje kod nas na gazdinstvu."
-        }
-    }
-
-    setUsloviIsporuke = () => {
-
     }
 }
 
