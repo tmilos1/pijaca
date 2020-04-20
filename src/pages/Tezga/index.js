@@ -43,6 +43,16 @@ const Tezga = observer(() => {
         naruciVisible = true
     }
 
+        /*
+        *
+                    const fbPageUrl = "http://localhost:3000/tezga/" + orderStore.tezga.id
+                    <br />
+                    <br />
+                    <Paper className={classes.paperPadding} style={{textAlign: 'center'}}>
+                        <div className="fb-comments" data-href={fbPageUrl} data-numposts="5" data-width="100%"></div>
+                    </Paper>
+        */
+
     return (
         <main>
             <div className={classes.toolbarMargin}>
@@ -95,9 +105,9 @@ const Tezga = observer(() => {
                             <img key={slika.url} alt="random" width="400" height="300" src={slika.url} />
                         ))}
                     </Carousel>
+                    <br />
+                    <br />
 
-                    <br />
-                    <br />
                     <Paper className={classes.paperPadding}>
                     {orderStore.tezga.grupe.map(grupa => (
                     <Grid container spacing={3} key={grupa.kod}>
@@ -117,6 +127,8 @@ const Tezga = observer(() => {
                             Ukupan iznos narudžbine: {orderStore.iznos} din.
                         </Typography>
                     </Paper>
+
+
                     <br />
                     <br />
                     <br />
