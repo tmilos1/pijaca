@@ -12,6 +12,10 @@ import Typography from '@material-ui/core/Typography'
 import { Link } from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles'
 
+import { FB_ID } from './../../stores/apiConf'
+
+import { FacebookProvider, Like } from 'react-facebook';
+
 import { observer } from "mobx-react"
 import { useAppContext } from '../../stores/AppContext'
 
@@ -21,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: theme.spacing(8),
     },
     card: {
-        height: '100%',
+        height: "100%",
         display: 'flex',
         flexDirection: 'column',
     },
@@ -35,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
     },
     cardContent: {
         flexGrow: 1,
+        height: "133px",
+        overflow: "hidden",
     },
 }))
    
@@ -50,7 +56,7 @@ const Tezge = observer(() => {
                         <Card className={classes.card}>
                             <CardMedia
                                 className={classes.cardMedia}
-                                image={tezga.slika}
+                                image={tezga.slika ? tezga.slika : '/images/tezga-puna.png'}
                                 title="Image title"
                             />
                             <CardContent className={classes.cardContent}>
@@ -58,13 +64,18 @@ const Tezge = observer(() => {
                                     {tezga.naziv}
                                 </Typography> 
                                 <Typography>
-                                    {tezga.napomena}
+                                    {tezga.napomena.substr(0, 84)}
                                 </Typography>
                             </CardContent>
                             <CardActions>
                                 <Button color="primary" component={Link} to={'/tezga/' + tezga.id}>
                                     Poseti
                                 </Button>
+                                {/* <div style={{width: "100%", textAlign: "right"}}>
+                                    <FacebookProvider appId={FB_ID}>
+                                        <Like href={"https://napijaci.rs/tezga/" + tezga.id} colorScheme="light" layout="box_count" size="small" />
+                                    </FacebookProvider>
+                                </div> */}
                             </CardActions>
                         </Card>
                     </Grid>

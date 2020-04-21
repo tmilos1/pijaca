@@ -10,11 +10,17 @@ import {
 } from "react-router-dom"
 
 import AppBar from '@material-ui/core/AppBar'
+import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import EcoIcon from '@material-ui/icons/Eco';
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+
+import ReactGA from 'react-ga'
+import { GA_ID } from './stores/apiConf'
+import { useAppContext } from './stores/AppContext'
+import withTracker from './withTracker'
 
 import Home from './pages/Home'
 import Prijava from './pages/Prijava'
@@ -34,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   homeLink: {
     textDecoration: 'none',
     color: 'white',
+    marginRight: '50px',
   }
 }))
 
@@ -49,6 +56,16 @@ function ScrollToTop() {
 
 function App() {
   const classes = useStyles()
+  const { appStore } = useAppContext()
+
+  useEffect(() => {
+    ReactGA.initialize(GA_ID)
+
+    if(!appStore.initialLoadProp) {
+      ReactGA.pageview(window.location.pathname);  
+      appStore.initialLoadProp = true
+    }
+  }, [appStore])
 
   return (
     <React.Fragment>
@@ -65,27 +82,31 @@ function App() {
                   Pijaca - Kruševac
                 </Typography>
               </Link>
+              <Link className={classes.homeLink} to="/">
+                <Typography variant="h6" className={classes.title}>
+                  Početna
+                </Typography>
+              </Link>
+
+              {/* <Button style={{position: 'absolute', right: '0'}} color="inherit">
+                <Link className={classes.homeLink} to="/prijava">
+                  Prijava
+                </Link>
+              </Button> */}
+
             </Toolbar>
           </Container>
         </AppBar>
 
         <Switch>
 
-          <Route path="/tezga/:tezgaId">
-            <Tezga />
-          </Route>
+          <Route path="/tezga/:tezgaId" component={withTracker(Tezga)} />
 
-          <Route path="/prijava-tezge">
-            <Wizard />
-          </Route>
+          <Route path="/prijava-tezge" component={withTracker(Wizard)} />
 
-          <Route path="/prijava">
-            <Prijava />
-          </Route>
+          <Route path="/prijava" component={withTracker(Prijava)} />
 
-          <Route path="/">
-            <Home />
-          </Route>
+          <Route path="/" component={withTracker(Home)} />
 
         </Switch>
       </Router>

@@ -8,6 +8,10 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { useParams } from "react-router-dom"
 
+import { FacebookProvider, Comments, Like } from 'react-facebook';
+
+import { FB_ID } from './../../stores/apiConf'
+
 import Carousel from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
 
@@ -43,15 +47,7 @@ const Tezga = observer(() => {
         naruciVisible = true
     }
 
-        /*
-        *
-                    const fbPageUrl = "http://localhost:3000/tezga/" + orderStore.tezga.id
-                    <br />
-                    <br />
-                    <Paper className={classes.paperPadding} style={{textAlign: 'center'}}>
-                        <div className="fb-comments" data-href={fbPageUrl} data-numposts="5" data-width="100%"></div>
-                    </Paper>
-        */
+    const fbPageUrl = "https://napijaci.rs/tezga/" + orderStore.tezga.id
 
     return (
         <main>
@@ -76,8 +72,13 @@ const Tezga = observer(() => {
                         <br />
                         <br />
                         <Typography variant="h6">
-                            {orderStore.tezga.napomena.substr(0, 200)}
+                            {orderStore.tezga.napomena.substr(0, 480)}
                         </Typography>
+                        <br />
+                        <br />
+                        <FacebookProvider appId={FB_ID}>
+                            <Like href={fbPageUrl} colorScheme="dark" showFaces share size="large" />
+                        </FacebookProvider>
                     </Paper>
                     <br />
                     <Paper className={classes.paperPadding}>
@@ -128,7 +129,6 @@ const Tezga = observer(() => {
                         </Typography>
                     </Paper>
 
-
                     <br />
                     <br />
                     <br />
@@ -169,7 +169,14 @@ const Tezga = observer(() => {
                             </>
                         )
                         }
-            
+                    </Paper>
+
+                    <br />
+                    <br />
+                    <Paper className={classes.paperPadding} style={{textAlign: 'center'}}>
+                        <FacebookProvider appId={FB_ID}>
+                            <Comments href={fbPageUrl} width="100%"/>
+                        </FacebookProvider>
                     </Paper>
             </Container>
             </div>
