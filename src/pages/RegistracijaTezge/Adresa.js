@@ -136,9 +136,9 @@ const Adresa = observer(() => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                     <FormControl className={clsx(classes.textField)}>
-                        <InputLabel htmlFor="standard-adornment-password">Lozinka *</InputLabel>
+                        <InputLabel htmlFor="standard-adornment-password">Lozinka {tezgaStore.form.edit_mode ? '' : '*'}</InputLabel>
                         <Input
-                            required
+                            required={tezgaStore.form.edit_mode ? 'required' : undefined}
                             id="standard-adornment-password"
                             type={values.showPassword ? 'text' : 'password'}
                             name="lozinka"

@@ -17,9 +17,11 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import EcoIcon from '@material-ui/icons/Eco';
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
 
 import ReactGA from 'react-ga'
 import { GA_ID } from './stores/apiConf'
+import { observer } from "mobx-react"
 import { useAppContext } from './stores/AppContext'
 import withTracker from './withTracker'
 
@@ -42,7 +44,12 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: 'white',
     marginRight: '50px',
-  }
+  },
+  centerAppItems: {
+      display: "flex",
+      alignItems: "center",
+      height: "100%",
+  },
 }))
 
 function ScrollToTop() {
@@ -65,7 +72,7 @@ function Odjava() {
   return <Redirect to="/" />
 }
 
-function App() {
+const App = observer(() => {
   const classes = useStyles()
   const { appStore } = useAppContext()
   const { authStore } = useAppContext()
@@ -88,23 +95,53 @@ function App() {
         <AppBar className={classes.appTitle} position="relative">
           <Container >
             <Toolbar>
-              <EcoIcon className={classes.icon} />
-              <Link className={classes.homeLink} to="/">
-                <Typography variant="h6" color="inherit" noWrap>
-                  Pijaca - Kruševac
-                </Typography>
-              </Link>
-              <Link className={classes.homeLink} to="/">
-                <Typography variant="h6" className={classes.title}>
-                  Početna
-                </Typography>
-              </Link>
+              <Grid container>
+                  <Grid item md={3}>
+                      <div className={classes.centerAppItems}>
+                          <EcoIcon className={classes.icon} style={{alignSelf: "center"}}/>
+                          <Link className={classes.homeLink} to="/">
+                            <Typography variant="h6" color="inherit" noWrap>
+                              Pijaca - Kruševac
+                            </Typography>
+                          </Link>
+                      </div>
+                  </Grid>
+                  <Grid item md={7}>
+                      <div className={classes.centerAppItems}>
+                          <Link className={classes.homeLink} to="/">
+                            <Typography variant="h6" className={classes.title}>
+                              Početna
+                            </Typography>
+                          </Link>
+                          {authStore.prijavljen && (
+                          <Link className={classes.homeLink} to="/izmena-tezge">
+                            <Typography variant="h6" className={classes.title}>
+                              Izmena podataka
+                            </Typography>
+                          </Link>
+                          )}
+                      </div>
+                  </Grid>
 
-              {/* <Button style={{position: 'absolute', right: '0'}} color="inherit">
-                <Link className={classes.homeLink} to="/prijava">
-                  Prijava
-                </Link>
-              </Button> */}
+                  <Grid item md={2}>
+                      <div className={classes.centerAppItems}>
+
+                          {authStore.prijavljen ? (
+                              <Button style={{position: 'absolute', right: '0'}} color="inherit">
+                                <Link className={classes.homeLink} to="/odjava">
+                                  Odjava
+                                </Link>
+                              </Button>
+                          ) : (
+                              <Button style={{position: 'absolute', right: '0'}} color="inherit">
+                                <Link className={classes.homeLink} to="/prijava">
+                                  Prijava
+                                </Link>
+                              </Button>
+                          )}
+                      </div>
+                  </Grid>
+                </Grid>
 
             </Toolbar>
           </Container>
@@ -115,6 +152,8 @@ function App() {
           <Route path="/tezga/:tezgaId" component={withTracker(Tezga)} />
 
           <Route path="/prijava-tezge" component={withTracker(Wizard)} />
+
+          <Route path="/izmena-tezge" component={withTracker(Wizard)} />
 
           <Route path="/prijava" component={withTracker(Prijava)} />
 
@@ -128,6 +167,6 @@ function App() {
       <Footer />
     </React.Fragment>
   );
-}
+})
 
 export default App
