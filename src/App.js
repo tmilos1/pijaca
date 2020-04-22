@@ -7,6 +7,7 @@ import {
   Switch,
   Route,
   Link,
+  Redirect,
 } from "react-router-dom"
 
 import AppBar from '@material-ui/core/AppBar'
@@ -54,9 +55,20 @@ function ScrollToTop() {
   return null
 }
 
+function Odjava() {
+  const { authStore } = useAppContext()
+
+  useEffect(() => {
+    authStore.handleLogoutClick()
+  }, [authStore])
+
+  return <Redirect to="/" />
+}
+
 function App() {
   const classes = useStyles()
   const { appStore } = useAppContext()
+  const { authStore } = useAppContext()
 
   useEffect(() => {
     ReactGA.initialize(GA_ID)
@@ -106,7 +118,9 @@ function App() {
 
           <Route path="/prijava" component={withTracker(Prijava)} />
 
-          <Route path="/" component={withTracker(Home)} />
+          <Route path="/odjava" component={withTracker(Odjava)} />
+
+          <Route path="/" component={Home} />
 
         </Switch>
       </Router>

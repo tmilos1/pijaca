@@ -1,17 +1,23 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
+import React from 'react'
+import {Redirect} from 'react-router-dom';
+
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import TextField from '@material-ui/core/TextField'
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Checkbox from '@material-ui/core/Checkbox';
 // import Link from '@material-ui/core/Link';
 // import Grid from '@material-ui/core/Grid';
 // import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import MuiAlert from '@material-ui/lab/Alert'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
+
+import { observer } from "mobx-react"
+import { useAppContext } from '../../stores/AppContext'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,11 +39,36 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignIn() {
-    const classes = useStyles();
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const SignIn = observer(() => {
+    const classes = useStyles()
+    const { authStore } = useAppContext()
+
+    let loginVisible = null
+
+    if (authStore.form.meta.isValid) {
+        loginVisible = true
+    }
+
+    let greskaPrijave = null
+    if (authStore.form.meta.error) {
+        greskaPrijave = (
+            <>
+                <br />
+                <br />
+                <Alert severity="error">{authStore.form.meta.error}</Alert>
+                <br />
+            </>
+        )
+    }
     return (
         <Container component="main" maxWidth="xs">
+            {authStore.prijavljen && <Redirect to="/" />}
+
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -57,6 +88,11 @@ export default function SignIn() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        value={authStore.form.fields.email.value}
+                        error={authStore.form.fields.email.touched && authStore.form.fields.email.invalid}
+                        helperText={authStore.form.fields.email.error}
+                        onChange={authStore.onFieldChange}
+                        onClick={authStore.handleFieldClick}
                     />
                     <TextField
                         variant="outlined"
@@ -68,17 +104,24 @@ export default function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value={authStore.form.fields.password.value}
+                        error={authStore.form.fields.password.touched && authStore.form.fields.password.invalid}
+                        helperText={authStore.form.fields.password.error}
+                        onChange={authStore.onFieldChange}
+                        onClick={authStore.handleFieldClick}
                     />
                     {/* <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Zapamti me"
                     /> */}
+                    {greskaPrijave}
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={authStore.handleLoginClick}
+                        disabled={!loginVisible}
                     >
                         Prijava
                     </Button>
@@ -98,4 +141,6 @@ export default function SignIn() {
             </div>
         </Container>
     );
-}
+})
+
+export default SignIn
