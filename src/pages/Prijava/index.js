@@ -67,7 +67,7 @@ const SignIn = observer(() => {
     }
     return (
         <Container component="main" maxWidth="xs">
-            {authStore.prijavljen && <Redirect to="/" />}
+            {authStore.prijavljen && <Redirect to="/izmena-tezge" />}
 
             <CssBaseline />
             <div className={classes.paper}>

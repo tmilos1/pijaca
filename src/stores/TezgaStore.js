@@ -74,76 +74,98 @@ class TezgaStore extends AbstractFormStore {
         files: [],
         grupe: [],
         proizvodi: [],
-        kod_grada: 'KS'
+        kod_grada: 'KS',
+        edit_mode: false,
     }
 
     constructor() {
         super()
 
         Validator.registerAsync('email_available', function (email, attribute, req, passes) {
-            const emailValidator = new Validator({email: email}, {email: 'email'})
+            emailAvailableValidator(email, passes)
+        })
 
-            if (emailValidator.fails()) {
-                passes()
-                return
-            }
-
-            let url = new URL(API_URL + '/registracija/email_available'),
-                params = { email }
-
-            Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-
-            fetch(url)
-                .then((response) => {
-                    return response.json()
-                })
-                .then(data => {
-                    console.log(data)
-                    if (data.email_available) {
-                        passes()
-                        return
-                    }
-
-                    passes(false, 'Ovaj email je već korišćen za drugu tezgu.'); 
-                })
+        Validator.registerAsync('email_available_for_owner', function (email, attribute, req, passes) {
+            emailAvailableValidator(email, passes, true)
         })
     }
 
-    fetchData = () => {
+    fetchAuxData = async () => {
         this.form.grupe = []
-        fetch(API_URL + '/grupe')
-            .then((response) => {
-                return response.json()
+        const responseGrupe = await fetch(API_URL + '/grupe')
+        const dataGrupe = await responseGrupe.json()
+
+        for (const row of dataGrupe) {
+            this.form.grupe.push({
+                kod: row.kod,
+                naziv: row.naziv,
+                izabran: false
             })
-            .then(data => {
-                for (const row of data) {
-                    this.form.grupe.push({
-                        kod: row.kod,
-                        naziv: row.naziv,
-                        izabran: false
-                    })
-                }
-            })
+        }
 
         this.form.proizvodi = []
-        fetch(API_URL + '/proizvodi')
+        const responseProizvodi = await fetch(API_URL + '/proizvodi')
+        const dataProizvodi = await responseProizvodi.json()
+
+        for (const row of dataProizvodi) {
+            this.form.proizvodi.push({
+                kod: row.kod,
+                kod_grupe: row.kod_grupe,
+                naziv: row.naziv,
+                opis_cene: row.opis_cene,
+                slika_proizvoda: row.slika_proizvoda,
+                cena: 0.00,
+                napomena: "",
+                izabran: false
+            })
+        }
+    }
+
+    prepareForEdit = (tezga_id) => {
+        this.form.fields.email.rule = 'required|email|email_available_for_owner'
+        this.form.fields.lozinka.rule = 'string'
+        this.form.edit_mode = true
+
+        fetch(API_URL + '/tezge/' + tezga_id)
             .then((response) => {
                 return response.json()
             })
             .then(data => {
-                for (const row of data) {
-                    this.form.proizvodi.push({
-                        kod: row.kod,
-                        kod_grupe: row.kod_grupe,
-                        naziv: row.naziv,
-                        opis_cene: row.opis_cene,
-                        slika_proizvoda: row.slika_proizvoda,
-                        cena: 0.00,
-                        napomena: "",
-                        izabran: false
-                    })
+                console.log(data)
+                this.form.fields.naziv.value = data.naziv
+                this.form.fields.napomena.value = data.napomena
+                this.form.nacin_dostave = data.nacin_dostave
+                this.form.kucna_isporuka = data.kucna_isporuka
+                this.form.fields.adresa.value = data.adresa
+                this.form.fields.email.value = data.email
+                this.form.fields.vebsajt.value = data.vebsajt
+                this.form.fields.telefon.value = data.telefon
+                this.form.fields.primedba.value = data.primedba
+                this.form.meta.isValid = true
+
+                for (const row of data.proizvodi) {
+                    const proizvod = this.form.proizvodi.find(el => el.kod === row.kod_proizvoda)
+                    proizvod.izabran = true
+                    proizvod.napomena = row.napomena
+                    proizvod.cena = row.cena
+
+                    const grupa = this.form.grupe.find(el => el.kod === row.kod_grupe)
+                    grupa.izabran = true
                 }
             })
+    }
+
+    resetTezga = () => {
+        this.form.fields.naziv.value = ""
+        this.form.fields.napomena.value = ""
+        this.form.nacin_dostave = ""
+        this.form.kucna_isporuka = ""
+        this.form.fields.adresa.value = ""
+        this.form.fields.email.value = ""
+        this.form.fields.vebsajt.value = ""
+        this.form.fields.telefon.value = ""
+        this.form.fields.primedba.value = ""
+        this.form.meta.isValid = false
     }
 
     saveData = async (captcha_token, grad, kod_grada) => {
@@ -235,6 +257,33 @@ class TezgaStore extends AbstractFormStore {
         const proizvod = this.form.proizvodi.find(el => el.kod === izabraniKod)
         proizvod.cena = fieldValue
     }
+}
+
+function emailAvailableValidator(email, passes, existingUser = false) {
+    const emailValidator = new Validator({email: email}, {email: 'email'})
+
+    if (emailValidator.fails()) {
+        passes()
+        return
+    }
+
+    let url = new URL(API_URL + '/registracija/email_available'),
+        params = { email }
+
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+    fetch(url)
+        .then((response) => {
+            return response.json()
+        })
+        .then(data => {
+            if (data.email_available) {
+                passes()
+                return
+            }
+
+            passes(false, 'Ovaj email je već korišćen za drugu tezgu.'); 
+        })
 }
 
 decorate(TezgaStore, {

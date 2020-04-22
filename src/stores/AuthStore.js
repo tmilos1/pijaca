@@ -2,6 +2,9 @@ import { observable, computed, decorate } from "mobx"
 import Validator from 'validatorjs'
 import AbstractFormStore from './AbstractFormStore'
 import { API_URL } from './apiConf'
+import * as jwt_decode from "jwt-decode";
+
+import { tezgaStore } from './AppContext'
 
 Validator.useLang('sr');
 
@@ -29,6 +32,17 @@ class AuthStore extends AbstractFormStore {
         },
     }
     prijavljen = false
+    tezga_id = null
+
+    constructor() {
+        super()
+
+        this.tezga_id = localStorage.getItem('tezga_id')
+        if (localStorage.getItem('access_token')) {
+            this.prijavljen = true
+        }
+        this.tezgaStore = tezgaStore
+    }
 
     handleLoginClick = async () => {
         const naruci_captcha_token = await window.grecaptcha.execute(
@@ -57,6 +71,10 @@ class AuthStore extends AbstractFormStore {
         localStorage.setItem('access_token', responseJson.access_token )
         localStorage.setItem('refresh_token', responseJson.refresh_token )
         this.prijavljen = true
+
+        const decodedToken = jwt_decode(responseJson.access_token)
+        this.tezga_id = decodedToken.user_claims.tezga_id
+        localStorage.setItem('tezga_id', decodedToken.user_claims.tezga_id)
     }
 
     handleFieldClick = () => {
@@ -64,25 +82,19 @@ class AuthStore extends AbstractFormStore {
     }
 
     handleLogoutClick = async () => {
+        this.prijavljen = false
         localStorage.removeItem('access_token')
         localStorage.removeItem('refresh_token')
 
+        this.tezgaStore.resetTezga()
         return Promise.resolve()
-    }
-
-    get checkAuth() {
-        if (localStorage.getItem('access_token')) {
-            return true
-        }
-
-        return false
     }
 }
 
 decorate(AuthStore, {
     form: observable,
     prijavljen: observable,
-    checkAuth: computed,
+    tezga_id: observable,
 })
 
 export default AuthStore

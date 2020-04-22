@@ -8,6 +8,8 @@ import GroupHomeFilter from '../../containers/GroupHomeFilter'
 import ProductHomeFilter from '../../containers/ProductHomeFilter'
 import Tezge from '../../containers/Tezge'
 
+import { observer } from "mobx-react"
+import { useAppContext } from '../../stores/AppContext'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -22,15 +24,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Home = () => {
+const Home = observer(() => {
     const classes = useStyles()
+  const { authStore } = useAppContext()
 
     return (
       <main>
         <div className={classes.toolbarMargin}>
-          <Hero />
-          <br />
-          <br />
+          {authStore.prijavljen || (
+              <>
+                  <Hero />
+                  <br />
+                  <br />
+              </>
+          )}
 
           <Container >
             <Grid className={classes.mainContainer} container spacing={3}>
@@ -47,6 +54,6 @@ const Home = () => {
         </div>
       </main>
     )
-}
+})
 
 export default Home

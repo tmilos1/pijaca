@@ -65,6 +65,7 @@ const Wizard = observer(() => {
     const classes = useStyles()
     const { tezgaStore } = useAppContext()
     const { appStore } = useAppContext()
+    const { authStore } = useAppContext()
 
     const [activeStep, setActiveStep] = React.useState(0)
 
@@ -87,8 +88,14 @@ const Wizard = observer(() => {
     }
 
     useEffect(() => {
-        tezgaStore.fetchData()
-    }, [tezgaStore])
+        async function fetchData() {
+            await tezgaStore.fetchAuxData()
+            if (authStore.prijavljen) {
+                tezgaStore.prepareForEdit(authStore.tezga_id)
+            }
+        }
+        fetchData()
+    }, [tezgaStore, authStore])
 
 
     let nextButtonVisible = null
@@ -106,7 +113,9 @@ const Wizard = observer(() => {
         <Container>
             <Paper className={classes.paper}>
                 <Typography component="h1" variant="h4" align="center">
-                    Prijava nove tezge!
+                    {authStore.prijavljen ?
+                        "Izmena tezge br. " + authStore.tezga_id: "Prijava nove tezge!"
+                    }
                 </Typography>
                 <Stepper activeStep={activeStep} className={classes.stepper}>
                     {steps.map((label) => (
