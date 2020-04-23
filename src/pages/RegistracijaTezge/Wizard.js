@@ -75,9 +75,15 @@ const Wizard = observer(() => {
                 "6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud", { action: "registracija_save" }
             )
 
-            const { last_id } = await tezgaStore.saveData(save_captcha_token, appStore.grad, appStore.kod_grada)
-
-            await tezgaStore.uploadFiles(last_id)
+            if (!authStore.prijavljen) {
+                const { last_tezga_id } = await tezgaStore.createTezga(save_captcha_token, appStore.grad, appStore.kod_grada)
+                await tezgaStore.uploadAnonFiles(last_tezga_id)
+            } else {
+                await tezgaStore.updateTezga()
+                //await tezgaStore.updatePassword()
+                //await tezgaStore.uploadFiles()
+                //await tezgaStore.deleteRemovedFiles()
+            }
         }
 
         setActiveStep(activeStep + 1)
@@ -90,6 +96,7 @@ const Wizard = observer(() => {
     useEffect(() => {
         async function fetchData() {
             await tezgaStore.fetchAuxData()
+            console.log(authStore.prijavljen)
             if (authStore.prijavljen) {
                 tezgaStore.prepareForEdit(authStore.tezga_id)
             }
@@ -107,6 +114,29 @@ const Wizard = observer(() => {
         default:
             nextButtonVisible = true
             break;
+    }
+
+    let dugmeSnimiLabela = 'Prijavi tezgu'
+    let hvalaPoruka = (
+        <>
+            <Typography variant="h5" gutterBottom>
+                Hvala na prijavi!
+            </Typography>
+            <Typography variant="subtitle1">
+                Sve narudžbine dobijaćete putem email-a.
+            </Typography>
+        </>
+    )
+
+    if (authStore.prijavljen) {
+        dugmeSnimiLabela = 'Snimi promene'
+        hvalaPoruka = (
+            <>
+                <Typography variant="h5" gutterBottom>
+                    Vaše promene su snimljene!
+                </Typography>
+            </>
+        )
     }
 
     return (
@@ -127,13 +157,7 @@ const Wizard = observer(() => {
                 <React.Fragment>
                     {activeStep === steps.length ? (
                         <React.Fragment>
-                            <Typography variant="h5" gutterBottom>
-                                Hvala na prijavi!
-                            </Typography>
-                            <Typography variant="subtitle1">
-                                Nakon što pregledamo prijavu, pojaviće se na sajtu.
-                                Sve narudžbine dobijaćete putem email-a.
-                            </Typography>
+                            {hvalaPoruka}
                             <br />
                             <Button variant="contained" color="primary" component={Link} to={'/'}>
                                 Povratak na naslovnu stranu!
@@ -155,7 +179,7 @@ const Wizard = observer(() => {
                                         className={classes.button}
                                         disabled={!nextButtonVisible}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Prijavi tezgu' : 'Sledeće'}
+                                        {activeStep === steps.length - 1 ? dugmeSnimiLabela : 'Sledeće'}
                                     </Button>
                                 </div>
                             </React.Fragment>

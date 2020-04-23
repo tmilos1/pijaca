@@ -31,15 +31,15 @@ const Adresa = observer(() => {
 
     const [values, setValues] = React.useState({
         showPassword: false,
-    });
+    })
 
     const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    };
+        setValues({ ...values, showPassword: !values.showPassword })
+    }
 
     const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+        event.preventDefault()
+    }
 
     return (
         <React.Fragment>
@@ -127,7 +127,6 @@ const Adresa = observer(() => {
                         label="Vebsajt"
                         type="url"
                         fullWidth
-                        autoComplete="website"
                         value={tezgaStore.form.fields.vebsajt.value}
                         error={tezgaStore.form.fields.vebsajt.touched && tezgaStore.form.fields.vebsajt.invalid}
                         helperText={tezgaStore.form.fields.vebsajt.error}

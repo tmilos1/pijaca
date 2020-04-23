@@ -54,6 +54,12 @@ const SignIn = observer(() => {
         loginVisible = true
     }
 
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            authStore.handleLoginClick()
+        }
+      }
+
     let greskaPrijave = null
     if (authStore.form.meta.error) {
         greskaPrijave = (
@@ -93,6 +99,7 @@ const SignIn = observer(() => {
                         helperText={authStore.form.fields.email.error}
                         onChange={authStore.onFieldChange}
                         onClick={authStore.handleFieldClick}
+                        onKeyPress={handleKeyPress}
                     />
                     <TextField
                         variant="outlined"
@@ -109,6 +116,7 @@ const SignIn = observer(() => {
                         helperText={authStore.form.fields.password.error}
                         onChange={authStore.onFieldChange}
                         onClick={authStore.handleFieldClick}
+                        onKeyPress={handleKeyPress}
                     />
                     {/* <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}

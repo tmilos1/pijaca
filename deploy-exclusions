@@ -1,0 +1,4 @@
+node_modules
+public
+stores/apiConf.js
+.gitignore

@@ -72,6 +72,7 @@ class TezgaStore extends AbstractFormStore {
         nacin_dostave: 'dostava',
         kucna_isporuka: '300din',
         files: [],
+        postojece_slike: [],
         grupe: [],
         proizvodi: [],
         kod_grada: 'KS',
@@ -122,37 +123,47 @@ class TezgaStore extends AbstractFormStore {
     }
 
     prepareForEdit = (tezga_id) => {
-        this.form.fields.email.rule = 'required|email|email_available_for_owner'
-        this.form.fields.lozinka.rule = 'string'
-        this.form.edit_mode = true
+        if (!this.form.edit_mode) {
+            this.form.fields.email.rule = 'required|email|email_available_for_owner'
+            this.form.fields.lozinka.rule = 'string'
+            this.form.edit_mode = true
 
-        fetch(API_URL + '/tezge/' + tezga_id)
-            .then((response) => {
-                return response.json()
-            })
-            .then(data => {
-                console.log(data)
-                this.form.fields.naziv.value = data.naziv
-                this.form.fields.napomena.value = data.napomena
-                this.form.nacin_dostave = data.nacin_dostave
-                this.form.kucna_isporuka = data.kucna_isporuka
-                this.form.fields.adresa.value = data.adresa
-                this.form.fields.email.value = data.email
-                this.form.fields.vebsajt.value = data.vebsajt
-                this.form.fields.telefon.value = data.telefon
-                this.form.fields.primedba.value = data.primedba
-                this.form.meta.isValid = true
+            fetch(API_URL + '/tezge/' + tezga_id)
+                .then((response) => {
+                    return response.json()
+                })
+                .then(data => {
+                    this.form.fields.naziv.value = data.naziv
+                    this.form.fields.napomena.value = data.napomena
+                    this.form.nacin_dostave = data.nacin_dostave
+                    this.form.kucna_isporuka = data.kucna_isporuka
+                    this.form.fields.adresa.value = data.adresa
+                    this.form.fields.email.value = data.email
+                    this.form.fields.vebsajt.value = data.vebsajt
+                    this.form.fields.telefon.value = data.telefon
+                    this.form.fields.primedba.value = data.primedba
+                    this.form.meta.isValid = true
 
-                for (const row of data.proizvodi) {
-                    const proizvod = this.form.proizvodi.find(el => el.kod === row.kod_proizvoda)
-                    proizvod.izabran = true
-                    proizvod.napomena = row.napomena
-                    proizvod.cena = row.cena
+                    for (const row of data.proizvodi) {
+                        const proizvod = this.form.proizvodi.find(el => el.kod === row.kod_proizvoda)
+                        proizvod.izabran = true
+                        proizvod.napomena = row.napomena
+                        proizvod.cena = row.cena
 
-                    const grupa = this.form.grupe.find(el => el.kod === row.kod_grupe)
-                    grupa.izabran = true
-                }
-            })
+                        const grupa = this.form.grupe.find(el => el.kod === row.kod_grupe)
+                        grupa.izabran = true
+                    }
+
+                    for (const row of data.slike) {
+                        this.form.postojece_slike.push(
+                            {
+                                url: row.url,
+                                obrisana: false,
+                            }
+                        )
+                    }
+                })
+        }
     }
 
     resetTezga = () => {
@@ -166,9 +177,10 @@ class TezgaStore extends AbstractFormStore {
         this.form.fields.telefon.value = ""
         this.form.fields.primedba.value = ""
         this.form.meta.isValid = false
+        this.form.edit_mode = false
     }
 
-    saveData = async (captcha_token, grad, kod_grada) => {
+    createTezga = async (captcha_token, grad, kod_grada) => {
         const response = await fetch(API_URL + '/registracija', {
             method: 'POST',
             headers: {
@@ -196,7 +208,7 @@ class TezgaStore extends AbstractFormStore {
         return response.json()
     }
 
-    uploadFiles = async (tezga_id) => {
+    uploadAnonFiles = async (tezga_id) => {
         for await (const file of this.form.files) {
             const formData = new FormData()
             formData.append('file', file)
@@ -206,6 +218,44 @@ class TezgaStore extends AbstractFormStore {
                 body: formData
             })
         }
+    }
+
+    updateTezga = async () => {
+
+        let url = new URL(API_URL + '/tezge'),
+            options = {}
+
+        options.headers = {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json'
+        }
+        options.method = 'PUT'
+        options.body = JSON.stringify({
+            naziv: this.form.fields.naziv.value,
+            napomena: this.form.fields.napomena.value,
+            nacin_dostave: this.form.nacin_dostave,
+            kucna_isporuka: this.form.kucna_isporuka,
+            adresa: this.form.fields.adresa.value,
+            email: this.form.fields.email.value,
+            vebsajt: this.form.fields.vebsajt.value,
+            telefon: this.form.fields.telefon.value,
+            primedba: this.form.fields.primedba.value,
+            proizvodi: this.form.proizvodi.filter(pr => pr.izabran === true),
+        })
+
+        await fetch(url, options)
+    }
+
+    updatePassword = async (tezga_id) => {
+        // return response.json()
+    }
+
+    uploadFiles = async (tezga_id) => {
+
+    }
+
+    deleteRemovedFiles = async (tezga_id) => {
+
     }
 
     handleNacinDostaveChange = (event) => {
@@ -260,7 +310,7 @@ class TezgaStore extends AbstractFormStore {
 }
 
 function emailAvailableValidator(email, passes, existingUser = false) {
-    const emailValidator = new Validator({email: email}, {email: 'email'})
+    const emailValidator = new Validator({ email: email }, { email: 'email' })
 
     if (emailValidator.fails()) {
         passes()
@@ -270,9 +320,17 @@ function emailAvailableValidator(email, passes, existingUser = false) {
     let url = new URL(API_URL + '/registracija/email_available'),
         params = { email }
 
+    const options = {}
+    if (existingUser) {
+        url = new URL(API_URL + '/registracija/email_available_for_owner')
+        options.headers = {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+    }
+
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
 
-    fetch(url)
+    fetch(url, options)
         .then((response) => {
             return response.json()
         })
@@ -282,7 +340,7 @@ function emailAvailableValidator(email, passes, existingUser = false) {
                 return
             }
 
-            passes(false, 'Ovaj email je već korišćen za drugu tezgu.'); 
+            passes(false, 'Ovaj email je već korišćen za drugu tezgu.');
         })
 }
 
