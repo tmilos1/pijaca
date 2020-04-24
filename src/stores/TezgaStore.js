@@ -154,6 +154,7 @@ class TezgaStore extends AbstractFormStore {
                         grupa.izabran = true
                     }
 
+                    this.form.postojece_slike = []
                     for (const row of data.slike) {
                         this.form.postojece_slike.push(
                             {
@@ -208,16 +209,53 @@ class TezgaStore extends AbstractFormStore {
         return response.json()
     }
 
-    uploadAnonFiles = async (tezga_id) => {
+    uploadFiles = async (tezga_id) => {
+        const options = { headers: { 'Content-Type': null } }
+        if (this.form.edit_mode) {
+            options.headers = {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            }
+        }
+
+        const slikeZaBrisanje = this.form.postojece_slike
+            .filter(sl => sl.obrisana === true)
+
+        if (slikeZaBrisanje.length > 0) {
+            for await (const slika of slikeZaBrisanje) {
+                options.headers['Content-Type'] = 'application/json'
+                options.method = 'DELETE'
+                options.body = JSON.stringify({
+                    full_filename: slika.url,
+                    tezga_id: tezga_id,
+                })
+
+                await fetch(API_URL + '/tezge/uploads', options)
+            }
+        }
+        this.form.postojece_slike = this.form.postojece_slike.filter(sl => sl.obrisana === false)
+
         for await (const file of this.form.files) {
             const formData = new FormData()
             formData.append('file', file)
+            formData.append('tezga_id', tezga_id)
 
-            await fetch(API_URL + '/upload_anon/' + tezga_id, {
+            options.headers['Content-Type'] = 'multipart/form-data'
+            options.method = 'POST'
+            options.body = formData
+
+            const postResponse = await fetch(API_URL + '/tezge/uploads', {
                 method: 'POST',
                 body: formData
             })
+
+            const postResponseObj = await postResponse.json()
+
+            this.form.postojece_slike.push({
+                url: postResponseObj.filename,
+                obrisana: false,
+            })
         }
+        this.form.files = []
     }
 
     updateTezga = async () => {
@@ -247,11 +285,23 @@ class TezgaStore extends AbstractFormStore {
     }
 
     updatePassword = async (tezga_id) => {
-        // return response.json()
-    }
+        if (!this.form.fields.lozinka.value) {
+            return
+        }
 
-    uploadFiles = async (tezga_id) => {
+        let url = new URL(API_URL + '/tezge/lozinka'),
+            options = {}
 
+        options.headers = {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json'
+        }
+        options.method = 'PATCH'
+        options.body = JSON.stringify({
+            lozinka: this.form.fields.lozinka.value,
+        })
+
+        await fetch(url, options)
     }
 
     deleteRemovedFiles = async (tezga_id) => {

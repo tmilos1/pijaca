@@ -76,13 +76,12 @@ const Wizard = observer(() => {
             )
 
             if (!authStore.prijavljen) {
-                const { last_tezga_id } = await tezgaStore.createTezga(save_captcha_token, appStore.grad, appStore.kod_grada)
-                await tezgaStore.uploadAnonFiles(last_tezga_id)
+                const { last_id } = await tezgaStore.createTezga(save_captcha_token, appStore.grad, appStore.kod_grada)
+                await tezgaStore.uploadFiles(last_id)
             } else {
                 await tezgaStore.updateTezga()
-                //await tezgaStore.updatePassword()
-                //await tezgaStore.uploadFiles()
-                //await tezgaStore.deleteRemovedFiles()
+                await tezgaStore.updatePassword()
+                await tezgaStore.uploadFiles(authStore.tezga_id)
             }
         }
 
