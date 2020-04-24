@@ -81,6 +81,10 @@ class HomeFilterStore {
     }
 
     dodajDemoTezge = () => {
+        if (this.filterGrupa.filter(el => el.izabran === true).length > 0 || this.filterProizvod.filter(el => el.izabran === true).length > 0) {
+            return
+        }
+
         const ukupnoIzBaze = this.tezge.length
         for (let i = 0; i < 20 - ukupnoIzBaze; i++) {
             this.tezge.push({
@@ -106,6 +110,7 @@ class HomeFilterStore {
             element.kod === kod
         )
         grupa.izabran = true
+        this.fetchTezge()
     }
 
     iskljuciGrupu = (kod) => {
@@ -113,6 +118,7 @@ class HomeFilterStore {
             element.kod === kod
         )
         grupa.izabran = false
+        this.fetchTezge()
     }
 
     ukljuciProizvod = (kod) => {

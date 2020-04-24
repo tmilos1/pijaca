@@ -84,7 +84,7 @@ class OrderStore extends AbstractFormStore {
                     return "Dostava na kućnu adresu. Besplatno za isnos preko 700din."
             }
         } else {
-            return "Preuzimanje kod nas na gazdinstvu."
+            return "Preuzimanje kod nas na gazdinstvu, pijaci, gradu - po dogovoru."
         }
     }
 

@@ -35,7 +35,7 @@ const UsloviIsporuke = observer(() => {
 
                 <FormControlLabel value="preuzimanje" control={<Radio />} label="Preuzimanje" />
                 <Typography variant="subtitle1">
-                    Preuzimanje kod nas na gazdinstvu.
+                    Preuzimanje kod nas na gazdinstvu, pijaci, gradu - po dogovoru.
                 </Typography>
             </RadioGroup>
         </FormControl>

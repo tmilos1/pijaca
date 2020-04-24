@@ -103,7 +103,7 @@ const Tezga = observer(() => {
                         }}
                     >
                         {orderStore.tezga.slike.map(slika => (
-                            <img key={slika.url} alt="random" width="400" height="300" src={slika.url} />
+                            <img key={slika.url} alt="random" height="300" src={slika.url} />
                         ))}
                     </Carousel>
                     <br />

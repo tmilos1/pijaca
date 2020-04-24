@@ -23,6 +23,12 @@ const useStyles = makeStyles({
     title: {
         minHeight: 80,
     },
+    neizabranProizvod: {
+        backgroundColor: "white"
+    },
+    izabranProizvod: {
+        backgroundColor: "#fff6e5"
+    },
 })
 
 
@@ -33,7 +39,7 @@ const KarticaKolicinaRobe = observer((props) => {
 
     return (
         <Card className={classes.root}>
-            <CardActionArea>
+        <CardActionArea className={props.proizvod.kolicina > 0 ? classes.izabranProizvod : classes.neizabranProizvod}>
                 <CardMedia
                     className={classes.media}
                     image={props.proizvod.slika_proizvoda}
@@ -49,7 +55,7 @@ const KarticaKolicinaRobe = observer((props) => {
                     ({props.proizvod.opis_cene})
                 </CardContent>
             </CardActionArea>
-            <CardActions>
+            <CardActions className={props.proizvod.kolicina > 0 ? classes.izabranProizvod : classes.neizabranProizvod}>
                 <form className={classes.root} noValidate autoComplete="off">
                 <TextField
                     id="standard-basic"
