@@ -25,6 +25,12 @@ const useStyles = makeStyles({
     title: {
         minHeight: 80,
     },
+    neizabranProizvod: {
+        backgroundColor: "white"
+    },
+    izabranProizvod: {
+        backgroundColor: "#e5fbe5"
+    },
 })
 
 
@@ -35,12 +41,12 @@ const KarticaCenaRobe = observer((props) => {
 
     return (
         <Card className={classes.root}>
-            <CardActionArea>
+            <CardActionArea className={props.proizvod.izabran ? classes.izabranProizvod : classes.neizabranProizvod}>
                 <CardMedia
                     className={classes.media}
                     image={props.proizvod.slika_proizvoda}
                 />
-                <CardContent>
+                <CardContent >
                     <Typography gutterBottom variant="h6" component="h2" className={classes.title}>
                         {props.proizvod.naziv}
                     </Typography>
@@ -56,23 +62,10 @@ const KarticaCenaRobe = observer((props) => {
                         }
                         label="U ponudi"
                     />
-                    <TextField
-                        id="napomena"
-                        name={props.proizvod.kod}
-                        label="Napomena"
-                        autoComplete="napomena"
-                        multiline
-                        fullWidth
-                        rows={2}
-
-                        value={props.proizvod.napomena.value}
-                        error={props.proizvod.napomena.touched && props.proizvod.napomena.invalid}
-                        helperText={props.proizvod.napomena.error}
-                        onChange={tezgaStore.handleProizvodNapomenaChange}
-                    />
                 </CardContent>
             </CardActionArea>
-            <CardActions>
+            <CardActions className={props.proizvod.izabran ? classes.izabranProizvod : classes.neizabranProizvod}>
+                {props.proizvod.izabran && (
                 <form className={classes.root} noValidate autoComplete="off">
                     <TextField
                         id="standard-basic" 
@@ -83,7 +76,23 @@ const KarticaCenaRobe = observer((props) => {
                         value={props.proizvod.cena}
                         onChange={tezgaStore.handleProizvodCenaChange}
                     />
+                    <br />
+                    <br />
+                    <TextField
+                        id="napomena"
+                        name={props.proizvod.kod}
+                        label="Napomena"
+                        autoComplete="napomena"
+                        multiline
+                        fullWidth
+
+                        value={props.proizvod.napomena.value}
+                        error={props.proizvod.napomena.touched && props.proizvod.napomena.invalid}
+                        helperText={props.proizvod.napomena.error}
+                        onChange={tezgaStore.handleProizvodNapomenaChange}
+                    />
                 </form>
+                )}
             </CardActions>
         </Card>
     )
