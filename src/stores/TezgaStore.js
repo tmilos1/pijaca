@@ -14,6 +14,7 @@ class TezgaStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             napomena: {
                 rule: 'string',
@@ -21,6 +22,7 @@ class TezgaStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             adresa: {
                 rule: 'string',
@@ -28,6 +30,7 @@ class TezgaStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             email: {
                 rule: 'required|email|email_available',
@@ -35,6 +38,7 @@ class TezgaStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             vebsajt: {
                 rule: 'url',
@@ -42,6 +46,7 @@ class TezgaStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             telefon: {
                 rule: 'required|string',
@@ -49,6 +54,7 @@ class TezgaStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             lozinka: {
                 rule: 'required',
@@ -56,6 +62,7 @@ class TezgaStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             primedba: {
                 rule: 'string',
@@ -63,6 +70,7 @@ class TezgaStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
         },
         meta: {
@@ -177,6 +185,15 @@ class TezgaStore extends AbstractFormStore {
         this.form.fields.vebsajt.value = ""
         this.form.fields.telefon.value = ""
         this.form.fields.primedba.value = ""
+
+        this.form.fields.naziv.touched = false
+        this.form.fields.napomena.touched = false
+        this.form.fields.adresa.touched = false
+        this.form.fields.email.touched = false
+        this.form.fields.vebsajt.touched = false
+        this.form.fields.telefon.touched = false
+        this.form.fields.primedba.touched = false
+
         this.form.meta.isValid = false
         this.form.edit_mode = false
     }
