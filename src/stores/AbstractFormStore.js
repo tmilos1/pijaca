@@ -1,11 +1,11 @@
-import { toJS } from "mobx"
+// import { toJS } from "mobx"
 import Validator from 'validatorjs'
 
 class AbstractFormStore {
 
     getFields(fieldName, key) {
         let data = {}
-        const keys = Object.keys(this.form.fields)
+        // const keys = Object.keys(this.form.fields)
 
         for (const field in this.form.fields) {
             // remove other already validated

@@ -5,8 +5,9 @@ import Grid from '@material-ui/core/Grid'
 
 import Hero from '../../components/Hero'
 import GroupHomeFilter from '../../containers/GroupHomeFilter'
-import ProductHomeFilter from '../../containers/ProductHomeFilter'
 import Tezge from '../../containers/Tezge'
+import Chip from '@material-ui/core/Chip'
+import Paper from '@material-ui/core/Paper'
 
 import { observer } from "mobx-react"
 import { useAppContext } from '../../stores/AppContext'
@@ -22,11 +23,31 @@ const useStyles = makeStyles((theme) => ({
   mainContainer__Filter: {
     minHeight: '2vh',
   },
+  chipTitle: {
+    margin: "0 0 10px",
+  },
+  chipList: {
+    display: 'flex',
+    justifyContent: 'left',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: theme.spacing(0.5),
+    margin: 0,
+  },
+  chip: {
+      margin: theme.spacing(0.5),
+  },
 }))
 
 const Home = observer(() => {
     const classes = useStyles()
-  const { authStore } = useAppContext()
+    const { authStore, homeFilterStore} = useAppContext()
+
+    const handleDelete = (chipToDelete) => () => {
+      homeFilterStore.filterProizvod.filter(el => el.kod === chipToDelete.kod).map(el => {
+        el.izabran = false
+      })
+    }
 
     return (
       <main>
@@ -45,7 +66,24 @@ const Home = observer(() => {
                 <GroupHomeFilter />
               </Grid>
               <Grid className={classes.mainContainer__Filter} item xs={12}>
-                <ProductHomeFilter />
+                {homeFilterStore.filterProizvod.filter(el => el.izabran === true).length > 0 &&
+                  <>
+                    <div className={classes.chipTitle}>
+                      Prikaz tezgi koji sadrže bar jedan od izabranih proizvoda:
+                    </div>
+                    <Paper component="ul" className={classes.chipList}>
+                      {homeFilterStore.filterProizvod.filter(el => el.izabran === true).map((data) => (
+                          <li key={data.kod}>
+                            <Chip
+                              label={data.naziv}
+                              onDelete={handleDelete(data)}
+                              className={classes.chip}
+                            />
+                          </li>
+                      ))}
+                    </Paper>
+                  </>
+                }
               </Grid>
             </Grid>
           </Container>

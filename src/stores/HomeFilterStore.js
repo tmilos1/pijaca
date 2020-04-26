@@ -5,6 +5,9 @@ class HomeFilterStore {
     filterGrupa = []
     filterProizvod = []
     tezge = []
+    izabranaGrupaIndex = 0
+    loadingTezge = true
+    loadingFilter = true
 
     constructor() {
         this.fetchData()
@@ -21,9 +24,9 @@ class HomeFilterStore {
                     this.filterGrupa.push({
                         kod: row.kod,
                         naziv: row.naziv,
-                        izabran: false
                     })
                 }
+                this.loadingFilter = false
             })
 
 
@@ -76,6 +79,8 @@ class HomeFilterStore {
                     slika: row.slika
                 })
             }
+
+            this.loadingTezge = false
             this.dodajDemoTezge()
         })
     }
@@ -105,20 +110,12 @@ class HomeFilterStore {
         return Math.floor(Math.random() * Math.floor(max))
     }
 
-    ukljuciGrupu = (kod) => {
-        const grupa = this.filterGrupa.find(element => 
-            element.kod === kod
-        )
-        grupa.izabran = true
-        this.fetchTezge()
-    }
+    getKodAktivneGrupe = () => {
+        if (this.filterGrupa[this.izabranaGrupaIndex]) {
+            return this.filterGrupa[this.izabranaGrupaIndex].kod
+        }
 
-    iskljuciGrupu = (kod) => {
-        const grupa = this.filterGrupa.find(element => 
-            element.kod === kod
-        )
-        grupa.izabran = false
-        this.fetchTezge()
+        return "VOC"
     }
 
     ukljuciProizvod = (kod) => {
@@ -142,6 +139,9 @@ decorate(HomeFilterStore, {
     filterGrupa: observable,
     filterProizvod: observable,
     tezge: observable,
+    izabranaGrupaIndex: observable,
+    loadingFilter: observable,
+    loadingTezge: observable,
 })
 
 export default HomeFilterStore
