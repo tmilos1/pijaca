@@ -38,9 +38,16 @@ class AuthStore extends AbstractFormStore {
         super()
 
         this.tezga_id = localStorage.getItem('tezga_id')
-        if (localStorage.getItem('access_token')) {
-            this.prijavljen = true
+
+        let accessToken = localStorage.getItem('access_token') 
+        if (accessToken) {
+            const decodedToken = jwt_decode(accessToken)
+
+            if (decodedToken.exp >= new Date().getTime()/1000) {
+                this.prijavljen = true
+            }
         }
+
         this.tezgaStore = tezgaStore
     }
 

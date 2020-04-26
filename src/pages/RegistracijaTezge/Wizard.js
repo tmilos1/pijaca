@@ -95,7 +95,6 @@ const Wizard = observer(() => {
     useEffect(() => {
         async function fetchData() {
             await tezgaStore.fetchAuxData()
-            console.log(authStore.prijavljen)
             if (authStore.prijavljen) {
                 tezgaStore.prepareForEdit(authStore.tezga_id)
             }

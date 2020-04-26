@@ -1,4 +1,4 @@
-import { observable, computed, decorate } from "mobx"
+import { observable, decorate } from "mobx"
 import Validator from 'validatorjs'
 import AbstractFormStore from './AbstractFormStore'
 import { API_URL } from './apiConf'
