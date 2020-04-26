@@ -44,9 +44,9 @@ const Home = observer(() => {
     const { authStore, homeFilterStore} = useAppContext()
 
     const handleDelete = (chipToDelete) => () => {
-      homeFilterStore.filterProizvod.filter(el => el.kod === chipToDelete.kod).map(el => {
+      for(let el of homeFilterStore.filterProizvod.filter(el => el.kod === chipToDelete.kod)) {
         el.izabran = false
-      })
+      }
     }
 
     return (

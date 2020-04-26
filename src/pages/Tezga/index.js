@@ -94,11 +94,9 @@ const Tezga = observer(() => {
                         breakpoints={{
                             640: {
                                 slidesPerPage: 1,
-                                arrows: false
                             },
                             900: {
                                 slidesPerPage: 2,
-                                arrows: false
                             }
                         }}
                     >
