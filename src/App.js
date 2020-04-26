@@ -28,6 +28,7 @@ import withTracker from './withTracker'
 import Home from './pages/Home'
 import Prijava from './pages/Prijava'
 import Tezga from './pages/Tezga'
+import Kontakt from './pages/Kontakt'
 import Wizard from './pages/RegistracijaTezge/Wizard'
 import Footer from './components/Footer'
 
@@ -120,6 +121,11 @@ const App = observer(() => {
                             </Typography>
                           </Link>
                           )}
+                          <Link className={classes.homeLink} to="/kontakt">
+                            <Typography variant="h6" className={classes.title}>
+                              Kontakt
+                            </Typography>
+                          </Link>
                       </div>
                   </Grid>
 
@@ -158,6 +164,8 @@ const App = observer(() => {
           <Route path="/prijava" component={withTracker(Prijava)} />
 
           <Route path="/odjava" component={withTracker(Odjava)} />
+
+          <Route path="/kontakt" component={withTracker(Kontakt)} />
 
           <Route path="/" component={Home} />
 

@@ -6,6 +6,7 @@ import AuthStore from './AuthStore'
 import HomeFilterStore from './HomeFilterStore'
 import TezgaStore from './TezgaStore'
 import OrderStore from './OrderStore'
+import KontaktStore from './KontaktStore'
 
 export const tezgaStore = new TezgaStore()
 
@@ -15,6 +16,7 @@ const appContext = React.createContext({
   homeFilterStore: makeInspectable(new HomeFilterStore()),
   tezgaStore: makeInspectable(tezgaStore),
   orderStore: makeInspectable(new OrderStore()),
+  kontaktStore: makeInspectable(new KontaktStore()),
 })
 
 export const useAppContext = () => React.useContext(appContext)
