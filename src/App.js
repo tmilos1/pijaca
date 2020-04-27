@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useLocation } from "react-router-dom"
 import './App.css'
 
 import {
@@ -25,6 +24,7 @@ import { observer } from "mobx-react"
 import { useAppContext } from './stores/AppContext'
 import withTracker from './withTracker'
 
+import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Prijava from './pages/Prijava'
 import Tezga from './pages/Tezga'
@@ -52,16 +52,6 @@ const useStyles = makeStyles((theme) => ({
       height: "100%",
   },
 }))
-
-function ScrollToTop() {
-  const { pathname } = useLocation()
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
-
-  return null
-}
 
 function Odjava() {
   const { authStore } = useAppContext()

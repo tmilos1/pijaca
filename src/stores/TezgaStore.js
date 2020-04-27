@@ -299,6 +299,7 @@ class TezgaStore extends AbstractFormStore {
         })
 
         await fetch(url, options)
+        this.form.edit_mode = false
     }
 
     updatePassword = async (tezga_id) => {
@@ -319,10 +320,6 @@ class TezgaStore extends AbstractFormStore {
         })
 
         await fetch(url, options)
-    }
-
-    deleteRemovedFiles = async (tezga_id) => {
-
     }
 
     handleNacinDostaveChange = (event) => {

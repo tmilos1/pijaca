@@ -66,6 +66,7 @@ const Wizard = observer(() => {
     const { tezgaStore } = useAppContext()
     const { appStore } = useAppContext()
     const { authStore } = useAppContext()
+    const { homeFilterStore } = useAppContext()
 
     const [activeStep, setActiveStep] = React.useState(0)
 
@@ -83,6 +84,7 @@ const Wizard = observer(() => {
                 await tezgaStore.updatePassword()
                 await tezgaStore.uploadFiles(authStore.tezga_id)
             }
+            homeFilterStore.fetchTezge()
         }
 
         setActiveStep(activeStep + 1)

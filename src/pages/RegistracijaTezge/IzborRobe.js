@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField'
 import { observer } from "mobx-react"
 import { useAppContext } from '../../stores/AppContext'
 
+import ScrollToTop from '../../components/ScrollToTop'
 import GrupaKarticaCenaRobe from '../../containers/GrupaKarticaCenaRobe'
 
 const IzborRobe = observer(() => {
@@ -17,6 +18,7 @@ const IzborRobe = observer(() => {
 
     return (
         <React.Fragment>
+            <ScrollToTop />
             <Container maxWidth="md">
                 <Typography variant="h5" align="center" color="textSecondary" paragraph>
                     Izaberite grupu robe i štiklirajte "u ponudi" robu koju prodajete.
