@@ -27,6 +27,8 @@ const NaruciForma = observer(() => {
                         error={orderStore.form.fields.naziv.touched && orderStore.form.fields.naziv.invalid}
                         helperText={orderStore.form.fields.naziv.error}
                         onChange={orderStore.onFieldChange}
+                        onKeyPress={orderStore.onKeyPress}
+                        onFocus={orderStore.onFocus}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -40,6 +42,8 @@ const NaruciForma = observer(() => {
                         error={orderStore.form.fields.adresa.touched && orderStore.form.fields.adresa.invalid}
                         helperText={orderStore.form.fields.adresa.error}
                         onChange={orderStore.onFieldChange}
+                        onKeyPress={orderStore.onKeyPress}
+                        onFocus={orderStore.onFocus}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -54,6 +58,8 @@ const NaruciForma = observer(() => {
                         error={orderStore.form.fields.telefon.touched && orderStore.form.fields.telefon.invalid}
                         helperText={orderStore.form.fields.telefon.error}
                         onChange={orderStore.onFieldChange}
+                        onKeyPress={orderStore.onKeyPress}
+                        onFocus={orderStore.onFocus}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -67,6 +73,8 @@ const NaruciForma = observer(() => {
                         error={orderStore.form.fields.email.touched && orderStore.form.fields.email.invalid}
                         helperText={orderStore.form.fields.email.error}
                         onChange={orderStore.onFieldChange}
+                        onKeyPress={orderStore.onKeyPress}
+                        onFocus={orderStore.onFocus}
                     />
                 </Grid>
                 <Grid item xs={12} sm={12} md={7}>
@@ -81,6 +89,8 @@ const NaruciForma = observer(() => {
                         error={orderStore.form.fields.napomena.touched && orderStore.form.fields.napomena.invalid}
                         helperText={orderStore.form.fields.napomena.error}
                         onChange={orderStore.onFieldChange}
+                        onKeyPress={orderStore.onKeyPress}
+                        onFocus={orderStore.onFocus}
                     />
                 </Grid>
             </Grid>

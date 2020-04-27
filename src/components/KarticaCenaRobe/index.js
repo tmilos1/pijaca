@@ -75,6 +75,8 @@ const KarticaCenaRobe = observer((props) => {
 
                         value={props.proizvod.cena}
                         onChange={tezgaStore.handleProizvodCenaChange}
+                        onKeyPress={tezgaStore.onKeyPress}
+                        onFocus={tezgaStore.onFocus}
                     />
                     <br />
                     <br />
@@ -90,6 +92,8 @@ const KarticaCenaRobe = observer((props) => {
                         error={props.proizvod.napomena.touched && props.proizvod.napomena.invalid}
                         helperText={props.proizvod.napomena.error}
                         onChange={tezgaStore.handleProizvodNapomenaChange}
+                        onKeyPress={tezgaStore.onKeyPress}
+                        onFocus={tezgaStore.onFocus}
                     />
                 </form>
                 )}

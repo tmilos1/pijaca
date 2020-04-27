@@ -69,6 +69,8 @@ const IzborRobe = observer(() => {
                         error={tezgaStore.form.fields.primedba.touched && tezgaStore.form.fields.primedba.invalid}
                         helperText={tezgaStore.form.fields.primedba.error}
                         onChange={tezgaStore.onFieldChange}
+                        onKeyPress={tezgaStore.onKeyPress}
+                        onFocus={tezgaStore.onFocus}
                     />
                 </Grid>
             </Grid>

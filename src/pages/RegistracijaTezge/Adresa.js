@@ -62,6 +62,8 @@ const Adresa = observer(() => {
                         error={tezgaStore.form.fields.naziv.touched && tezgaStore.form.fields.naziv.invalid}
                         helperText={tezgaStore.form.fields.naziv.error}
                         onChange={tezgaStore.onFieldChange}
+                        onKeyPress={tezgaStore.onKeyPress}
+                        onFocus={tezgaStore.onFocus}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -75,6 +77,8 @@ const Adresa = observer(() => {
                         error={tezgaStore.form.fields.adresa.touched && tezgaStore.form.fields.adresa.invalid}
                         helperText={tezgaStore.form.fields.adresa.error}
                         onChange={tezgaStore.onFieldChange}
+                        onKeyPress={tezgaStore.onKeyPress}
+                        onFocus={tezgaStore.onFocus}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -89,6 +93,8 @@ const Adresa = observer(() => {
                         error={tezgaStore.form.fields.napomena.touched && tezgaStore.form.fields.napomena.invalid}
                         helperText={tezgaStore.form.fields.napomena.error}
                         onChange={tezgaStore.onFieldChange}
+                        onKeyPress={tezgaStore.onKeyPress}
+                        onFocus={tezgaStore.onFocus}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -103,6 +109,8 @@ const Adresa = observer(() => {
                         error={tezgaStore.form.fields.email.touched && tezgaStore.form.fields.email.invalid}
                         helperText={tezgaStore.form.fields.email.error}
                         onChange={tezgaStore.onFieldChange}
+                        onKeyPress={tezgaStore.onKeyPress}
+                        onFocus={tezgaStore.onFocus}
                         fullWidth
                     />
                 </Grid>
@@ -118,6 +126,8 @@ const Adresa = observer(() => {
                         error={tezgaStore.form.fields.telefon.touched && tezgaStore.form.fields.telefon.invalid}
                         helperText={tezgaStore.form.fields.telefon.error}
                         onChange={tezgaStore.onFieldChange}
+                        onKeyPress={tezgaStore.onKeyPress}
+                        onFocus={tezgaStore.onFocus}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
@@ -131,6 +141,8 @@ const Adresa = observer(() => {
                         error={tezgaStore.form.fields.vebsajt.touched && tezgaStore.form.fields.vebsajt.invalid}
                         helperText={tezgaStore.form.fields.vebsajt.error}
                         onChange={tezgaStore.onFieldChange}
+                        onKeyPress={tezgaStore.onKeyPress}
+                        onFocus={tezgaStore.onFocus}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -144,6 +156,8 @@ const Adresa = observer(() => {
                             value={tezgaStore.form.fields.lozinka.value}
                             error={tezgaStore.form.fields.lozinka.touched && tezgaStore.form.fields.lozinka.invalid}
                             onChange={tezgaStore.onFieldChange}
+                            onKeyPress={tezgaStore.onKeyPress}
+                            onFocus={tezgaStore.onFocus}
 
                             endAdornment={
                                 <InputAdornment position="end">

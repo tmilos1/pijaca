@@ -113,7 +113,7 @@ const Tezga = observer(() => {
                                             onClick={kontaktStore.handlePosaljiClick}
                                             disabled={!posaljiVisible}
                                         >
-                                            Naruči
+                                            Pošalji
                             </Button>
                                     </Grid>
                                 </Grid>

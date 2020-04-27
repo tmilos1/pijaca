@@ -33,6 +33,14 @@ class AbstractFormStore {
         )
         
         const passes = () => {
+            for (const field in this.form.fields) {
+                if (this.form.fields[field].touched === false) {
+                    continue;
+                }
+                    
+                this.form.fields[field].invalid = false
+                this.form.fields[field].error = ""
+            }
             this.form.meta.isValid = true
         }
 
@@ -57,7 +65,14 @@ class AbstractFormStore {
         validation.checkAsync(passes, fails)
     }
 
-    onFieldBlur = (field) => {
+    onKeyPress(event) {
+        if (event.which === 13 /* Enter */) {
+          event.preventDefault()
+        }
+    }
+
+    onFocus(event) {
+        event.target.select()
     }
 }
 

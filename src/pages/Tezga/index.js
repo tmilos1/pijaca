@@ -135,7 +135,8 @@ const Tezga = observer(() => {
                         (
                                 <>
                                 <Typography variant="h5" gutterBottom>
-                                    Hvala na narudžbini!
+                                    Hvala na narudžbini! Ukoliko ste uneli email, narudžbenica će Vam tamo stići.<br />
+                                    Proverite i spam (neželjenu poštu).
                                 </Typography>
                                 <br />
                                 <br />

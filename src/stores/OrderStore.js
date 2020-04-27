@@ -21,6 +21,7 @@ class OrderStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             adresa: {
                 rule: 'string',
@@ -28,6 +29,7 @@ class OrderStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             email: {
                 rule: 'email',
@@ -35,6 +37,7 @@ class OrderStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             telefon: {
                 rule: 'required|string',
@@ -42,6 +45,7 @@ class OrderStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
             napomena: {
                 rule: 'string',
@@ -49,6 +53,7 @@ class OrderStore extends AbstractFormStore {
                 value: '',
                 invalid: false,
                 error: '',
+                validated: false,
             },
         },
         meta: {

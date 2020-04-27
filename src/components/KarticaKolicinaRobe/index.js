@@ -65,6 +65,8 @@ const KarticaKolicinaRobe = observer((props) => {
 
                     value={props.proizvod.kolicina}
                     onChange={orderStore.handleProizvodKolicinaChange}
+                    onKeyPress={orderStore.onKeyPress}
+                    onFocus={orderStore.onFocus}
                 />
                 </form>
             </CardActions>
