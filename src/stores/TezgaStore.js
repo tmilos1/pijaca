@@ -131,48 +131,46 @@ class TezgaStore extends AbstractFormStore {
     }
 
     prepareForEdit = (tezga_id) => {
-        if (!this.form.edit_mode) {
-            this.form.fields.email.rule = 'required|email|email_available_for_owner'
-            this.form.fields.lozinka.rule = 'string'
-            this.form.edit_mode = true
+        this.form.fields.email.rule = 'required|email|email_available_for_owner'
+        this.form.fields.lozinka.rule = 'string'
+        this.form.edit_mode = true
 
-            fetch(API_URL + '/tezge/' + tezga_id)
-                .then((response) => {
-                    return response.json()
-                })
-                .then(data => {
-                    this.form.fields.naziv.value = data.naziv
-                    this.form.fields.napomena.value = data.napomena
-                    this.form.nacin_dostave = data.nacin_dostave
-                    this.form.kucna_isporuka = data.kucna_isporuka
-                    this.form.fields.adresa.value = data.adresa
-                    this.form.fields.email.value = data.email
-                    this.form.fields.vebsajt.value = data.vebsajt
-                    this.form.fields.telefon.value = data.telefon
-                    this.form.fields.primedba.value = data.primedba
-                    this.form.meta.isValid = true
+        fetch(API_URL + '/tezge/' + tezga_id)
+            .then((response) => {
+                return response.json()
+            })
+            .then(data => {
+                this.form.fields.naziv.value = data.naziv
+                this.form.fields.napomena.value = data.napomena
+                this.form.nacin_dostave = data.nacin_dostave
+                this.form.kucna_isporuka = data.kucna_isporuka
+                this.form.fields.adresa.value = data.adresa
+                this.form.fields.email.value = data.email
+                this.form.fields.vebsajt.value = data.vebsajt
+                this.form.fields.telefon.value = data.telefon
+                this.form.fields.primedba.value = data.primedba
+                this.form.meta.isValid = true
 
-                    for (const row of data.proizvodi) {
-                        const proizvod = this.form.proizvodi.find(el => el.kod === row.kod_proizvoda)
-                        proizvod.izabran = true
-                        proizvod.napomena = row.napomena
-                        proizvod.cena = row.cena
+                for (const row of data.proizvodi) {
+                    const proizvod = this.form.proizvodi.find(el => el.kod === row.kod_proizvoda)
+                    proizvod.izabran = true
+                    proizvod.napomena = row.napomena
+                    proizvod.cena = row.cena
 
-                        const grupa = this.form.grupe.find(el => el.kod === row.kod_grupe)
-                        grupa.izabran = true
-                    }
+                    const grupa = this.form.grupe.find(el => el.kod === row.kod_grupe)
+                    grupa.izabran = true
+                }
 
-                    this.form.postojece_slike = []
-                    for (const row of data.slike) {
-                        this.form.postojece_slike.push(
-                            {
-                                url: row.url,
-                                obrisana: false,
-                            }
-                        )
-                    }
-                })
-        }
+                this.form.postojece_slike = []
+                for (const row of data.slike) {
+                    this.form.postojece_slike.push(
+                        {
+                            url: row.url,
+                            obrisana: false,
+                        }
+                    )
+                }
+            })
     }
 
     resetTezga = () => {
@@ -299,7 +297,6 @@ class TezgaStore extends AbstractFormStore {
         })
 
         await fetch(url, options)
-        this.form.edit_mode = false
     }
 
     updatePassword = async (tezga_id) => {
