@@ -79,6 +79,7 @@ const Wizard = observer(() => {
             if (!authStore.prijavljen) {
                 const { last_id } = await tezgaStore.createTezga(save_captcha_token, appStore.grad, appStore.kod_grada)
                 await tezgaStore.uploadFiles(last_id)
+                tezgaStore.initFormData()
             } else {
                 await tezgaStore.updateTezga()
                 await tezgaStore.updatePassword()
@@ -96,10 +97,7 @@ const Wizard = observer(() => {
 
     useEffect(() => {
         async function fetchData() {
-            await tezgaStore.fetchAuxData()
-            if (authStore.prijavljen) {
-                tezgaStore.prepareForEdit(authStore.tezga_id)
-            }
+            await tezgaStore.fetchData(authStore.prijavljen, authStore.tezga_id)
         }
         fetchData()
     }, [tezgaStore, authStore])

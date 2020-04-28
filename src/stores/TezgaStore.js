@@ -6,90 +6,12 @@ import { API_URL } from './apiConf'
 Validator.useLang('sr');
 
 class TezgaStore extends AbstractFormStore {
-    form = {
-        fields: {
-            naziv: {
-                rule: 'required',
-                touched: false,
-                value: '',
-                invalid: false,
-                error: '',
-                validated: false,
-            },
-            napomena: {
-                rule: 'string',
-                touched: false,
-                value: '',
-                invalid: false,
-                error: '',
-                validated: false,
-            },
-            adresa: {
-                rule: 'string',
-                touched: false,
-                value: '',
-                invalid: false,
-                error: '',
-                validated: false,
-            },
-            email: {
-                rule: 'required|email|email_available',
-                touched: false,
-                value: '',
-                invalid: false,
-                error: '',
-                validated: false,
-            },
-            vebsajt: {
-                rule: 'url',
-                touched: false,
-                value: '',
-                invalid: false,
-                error: '',
-                validated: false,
-            },
-            telefon: {
-                rule: 'required|string',
-                touched: false,
-                value: '',
-                invalid: false,
-                error: '',
-                validated: false,
-            },
-            lozinka: {
-                rule: 'required',
-                touched: false,
-                value: '',
-                invalid: false,
-                error: '',
-                validated: false,
-            },
-            primedba: {
-                rule: 'string',
-                touched: false,
-                value: '',
-                invalid: false,
-                error: '',
-                validated: false,
-            },
-        },
-        meta: {
-            isValid: false,
-            error: null
-        },
-        nacin_dostave: 'dostava',
-        kucna_isporuka: '300din',
-        files: [],
-        postojece_slike: [],
-        grupe: [],
-        proizvodi: [],
-        kod_grada: 'KS',
-        edit_mode: false,
-    }
 
     constructor() {
         super()
 
+        this.initFormData()
+        
         Validator.registerAsync('email_available', function (email, attribute, req, passes) {
             emailAvailableValidator(email, passes)
         })
@@ -99,38 +21,46 @@ class TezgaStore extends AbstractFormStore {
         })
     }
 
-    fetchAuxData = async () => {
-        this.form.grupe = []
-        const responseGrupe = await fetch(API_URL + '/grupe')
-        const dataGrupe = await responseGrupe.json()
+    fetchData = async (prijavljen, tezga_id) => {
+        if (!this.form._fetched_data) {
+            this.form.grupe = []
+            const responseGrupe = await fetch(API_URL + '/grupe')
+            const dataGrupe = await responseGrupe.json()
 
-        for (const row of dataGrupe) {
-            this.form.grupe.push({
-                kod: row.kod,
-                naziv: row.naziv,
-                izabran: false
-            })
-        }
+            for (const row of dataGrupe) {
+                this.form.grupe.push({
+                    kod: row.kod,
+                    naziv: row.naziv,
+                    izabran: false
+                })
+            }
 
-        this.form.proizvodi = []
-        const responseProizvodi = await fetch(API_URL + '/proizvodi')
-        const dataProizvodi = await responseProizvodi.json()
+            this.form.proizvodi = []
+            const responseProizvodi = await fetch(API_URL + '/proizvodi')
+            const dataProizvodi = await responseProizvodi.json()
 
-        for (const row of dataProizvodi) {
-            this.form.proizvodi.push({
-                kod: row.kod,
-                kod_grupe: row.kod_grupe,
-                naziv: row.naziv,
-                opis_cene: row.opis_cene,
-                slika_proizvoda: row.slika_proizvoda,
-                cena: 0.00,
-                napomena: "",
-                izabran: false
-            })
+            for (const row of dataProizvodi) {
+                this.form.proizvodi.push({
+                    kod: row.kod,
+                    kod_grupe: row.kod_grupe,
+                    naziv: row.naziv,
+                    opis_cene: row.opis_cene,
+                    slika_proizvoda: row.slika_proizvoda,
+                    cena: 0.00,
+                    napomena: "",
+                    izabran: false
+                })
+            }
+
+            if (prijavljen) {
+                this._prepareForEdit(tezga_id)
+            }
+
+            this.form._fetched_data = true
         }
     }
 
-    prepareForEdit = (tezga_id) => {
+    _prepareForEdit = (tezga_id) => {
         this.form.fields.email.rule = 'required|email|email_available_for_owner'
         this.form.fields.lozinka.rule = 'string'
         this.form.edit_mode = true
@@ -173,27 +103,88 @@ class TezgaStore extends AbstractFormStore {
             })
     }
 
-    resetTezga = () => {
-        this.form.fields.naziv.value = ""
-        this.form.fields.napomena.value = ""
-        this.form.nacin_dostave = ""
-        this.form.kucna_isporuka = ""
-        this.form.fields.adresa.value = ""
-        this.form.fields.email.value = ""
-        this.form.fields.vebsajt.value = ""
-        this.form.fields.telefon.value = ""
-        this.form.fields.primedba.value = ""
-
-        this.form.fields.naziv.touched = false
-        this.form.fields.napomena.touched = false
-        this.form.fields.adresa.touched = false
-        this.form.fields.email.touched = false
-        this.form.fields.vebsajt.touched = false
-        this.form.fields.telefon.touched = false
-        this.form.fields.primedba.touched = false
-
-        this.form.meta.isValid = false
-        this.form.edit_mode = false
+    initFormData = () => {
+        this.form = {
+            fields: {
+                naziv: {
+                    rule: 'required',
+                    touched: false,
+                    value: '',
+                    invalid: false,
+                    error: '',
+                    validated: false,
+                },
+                napomena: {
+                    rule: 'string',
+                    touched: false,
+                    value: '',
+                    invalid: false,
+                    error: '',
+                    validated: false,
+                },
+                adresa: {
+                    rule: 'string',
+                    touched: false,
+                    value: '',
+                    invalid: false,
+                    error: '',
+                    validated: false,
+                },
+                email: {
+                    rule: 'required|email|email_available',
+                    touched: false,
+                    value: '',
+                    invalid: false,
+                    error: '',
+                    validated: false,
+                },
+                vebsajt: {
+                    rule: 'url',
+                    touched: false,
+                    value: '',
+                    invalid: false,
+                    error: '',
+                    validated: false,
+                },
+                telefon: {
+                    rule: 'required|string',
+                    touched: false,
+                    value: '',
+                    invalid: false,
+                    error: '',
+                    validated: false,
+                },
+                lozinka: {
+                    rule: 'required',
+                    touched: false,
+                    value: '',
+                    invalid: false,
+                    error: '',
+                    validated: false,
+                },
+                primedba: {
+                    rule: 'string',
+                    touched: false,
+                    value: '',
+                    invalid: false,
+                    error: '',
+                    validated: false,
+                },
+            },
+            meta: {
+                isValid: false,
+                error: null
+            },
+            nacin_dostave: 'dostava',
+            kucna_isporuka: '300din',
+            files: [],
+            postojece_slike: [],
+            grupe: [],
+            proizvodi: [],
+            kod_grada: 'KS',
+            edit_mode: false,
+            _fetched_data: false,
+        }
     }
 
     createTezga = async (captcha_token, grad, kod_grada) => {

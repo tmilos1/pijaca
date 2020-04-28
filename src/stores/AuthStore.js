@@ -82,6 +82,7 @@ class AuthStore extends AbstractFormStore {
         const decodedToken = jwt_decode(responseJson.access_token)
         this.tezga_id = decodedToken.user_claims.tezga_id
         localStorage.setItem('tezga_id', decodedToken.user_claims.tezga_id)
+        this.tezgaStore.initFormData()
     }
 
     handleFieldClick = () => {
@@ -93,7 +94,7 @@ class AuthStore extends AbstractFormStore {
         localStorage.removeItem('access_token')
         localStorage.removeItem('refresh_token')
 
-        this.tezgaStore.resetTezga()
+        this.tezgaStore.initFormData()
         return Promise.resolve()
     }
 }
