@@ -184,6 +184,7 @@ class TezgaStore extends AbstractFormStore {
             kod_grada: 'KS',
             edit_mode: false,
             _fetched_data: false,
+            savingData: false,
         }
     }
 

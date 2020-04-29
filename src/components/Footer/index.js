@@ -35,6 +35,12 @@ function Footer() {
             {/* <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
                     Kontakt
             </Typography> */}
+            <div style={{textAlign: 'center'}}>
+              <Link href="https://napijaci.rs/terms">Uslovi</Link>
+              &nbsp;
+              <Link href="https://napijaci.rs/privacy">Privatnost</Link>
+            </div>
+
             <Copyright />
         </footer>
     )

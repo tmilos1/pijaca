@@ -88,6 +88,9 @@ const Tezge = observer(() => {
                                                 <Like href={"https://napijaci.rs/tezga/" + tezga.id} colorScheme="light" layout="box_count" size="small" />
                                             </FacebookProvider>
                                         </div> */}
+                                        <div style={{width: "100%", textAlign: "right"}}>
+                                            Tezga br. {tezga.id}
+                                        </div>
                                     </CardActions>
                                 </Card>
                             </Grid>

@@ -29,6 +29,8 @@ import Home from './pages/Home'
 import Prijava from './pages/Prijava'
 import Tezga from './pages/Tezga'
 import Kontakt from './pages/Kontakt'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 import Wizard from './pages/RegistracijaTezge/Wizard'
 import Footer from './components/Footer'
 
@@ -146,17 +148,13 @@ const App = observer(() => {
         <Switch>
 
           <Route path="/tezga/:tezgaId" component={withTracker(Tezga)} />
-
           <Route path="/prijava-tezge" component={withTracker(Wizard)} />
-
           <Route path="/izmena-tezge" component={withTracker(Wizard)} />
-
           <Route path="/prijava" component={withTracker(Prijava)} />
-
           <Route path="/odjava" component={withTracker(Odjava)} />
-
           <Route path="/kontakt" component={withTracker(Kontakt)} />
-
+          <Route path="/privacy" component={withTracker(Privacy)} />
+          <Route path="/terms" component={withTracker(Terms)} />
           <Route path="/" component={Home} />
 
         </Switch>

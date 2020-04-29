@@ -10,6 +10,7 @@ import StepLabel from '@material-ui/core/StepLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { Link } from "react-router-dom"
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { observer } from "mobx-react"
 import { useAppContext } from '../../stores/AppContext'
@@ -40,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: theme.spacing(3),
         marginLeft: theme.spacing(1),
+    },
+    loadingIndicator: {
+        margin: "0 auto"
     },
 }))
 
@@ -76,6 +80,7 @@ const Wizard = observer(() => {
                 "6Lc1z-kUAAAAADiKHTtebSZaGy48MYsWKf5Vkvud", { action: "registracija_save" }
             )
 
+            tezgaStore.form.savingData = true
             if (!authStore.prijavljen) {
                 const { last_id } = await tezgaStore.createTezga(save_captcha_token, appStore.grad, appStore.kod_grada)
                 await tezgaStore.uploadFiles(last_id)
@@ -86,6 +91,7 @@ const Wizard = observer(() => {
                 await tezgaStore.uploadFiles(authStore.tezga_id)
             }
             homeFilterStore.fetchTezge()
+            tezgaStore.form.savingData = false
         }
 
         setActiveStep(activeStep + 1)
@@ -162,25 +168,31 @@ const Wizard = observer(() => {
                             </Button>
                         </React.Fragment>
                     ) : (
-                            <React.Fragment>
-                                {getStepContent(activeStep)}
-                                <div className={classes.buttons}>
-                                    {activeStep !== 0 && (
-                                        <Button onClick={handleBack} className={classes.button}>
-                                            Prethodno
-                                        </Button>
-                                    )}
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={handleNext}
-                                        className={classes.button}
-                                        disabled={!nextButtonVisible}
-                                    >
-                                        {activeStep === steps.length - 1 ? dugmeSnimiLabela : 'Sledeće'}
-                                    </Button>
-                                </div>
-                            </React.Fragment>
+                            <>
+                            {tezgaStore.form.savingData ? (
+                                <CircularProgress className={classes.loadingIndicator} /> 
+                            ) : (
+                                <React.Fragment>
+                                    {getStepContent(activeStep)}
+                                    <div className={classes.buttons}>
+                                        {activeStep !== 0 && (
+                                            <Button onClick={handleBack} className={classes.button}>
+                                                Prethodno
+                                            </Button>
+                                        )}
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={handleNext}
+                                                className={classes.button}
+                                                disabled={!nextButtonVisible}
+                                            >
+                                                {activeStep === steps.length - 1 ? dugmeSnimiLabela : 'Sledeće'}
+                                            </Button>
+                                    </div>
+                                </React.Fragment>
+                            )}
+                            </>
                         )}
                 </React.Fragment>
             </Paper>
