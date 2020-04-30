@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(4, 0, 4)
     },
     paperPadding: {
-        padding: theme.spacing(3, 3, 3)
+        padding: theme.spacing(3, 3, 3),
+        overflow: "hidden",
     }
 }))
 
@@ -94,6 +95,9 @@ const Tezga = observer(() => {
                         breakpoints={{
                             640: {
                                 slidesPerPage: 1,
+                                clickToChange: true,
+                                arrows: false,
+                                infinite: true,
                             },
                             900: {
                                 slidesPerPage: 2,

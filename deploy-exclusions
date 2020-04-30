@@ -1,4 +1,4 @@
 node_modules
 public
-stores/apiConf.js
+src/stores/apiConf.js
 .gitignore

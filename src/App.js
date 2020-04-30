@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   appTitle: {
+    overflow: "hidden",
   },
   homeLink: {
     textDecoration: 'none',
@@ -53,6 +54,15 @@ const useStyles = makeStyles((theme) => ({
       alignItems: "center",
       height: "100%",
   },
+  authButtons: {
+    position: 'absolute',
+    right: '0',
+    color: 'inherit',
+    [theme.breakpoints.down('sm')]: {
+      position: 'static',
+      right: 'inherit',
+    }
+  }
 }))
 
 function Odjava() {
@@ -89,7 +99,7 @@ const App = observer(() => {
           <Container >
             <Toolbar>
               <Grid container>
-                  <Grid item md={3}>
+                  <Grid item sm={12} md={3}>
                       <div className={classes.centerAppItems}>
                           <EcoIcon className={classes.icon} style={{alignSelf: "center"}}/>
                           <Link className={classes.homeLink} to="/">
@@ -99,7 +109,7 @@ const App = observer(() => {
                           </Link>
                       </div>
                   </Grid>
-                  <Grid item md={7}>
+                  <Grid item sm={12} md={7}>
                       <div className={classes.centerAppItems}>
                           <Link className={classes.homeLink} to="/">
                             <Typography variant="h6" className={classes.title}>
@@ -109,7 +119,7 @@ const App = observer(() => {
                           {authStore.prijavljen && (
                           <Link className={classes.homeLink} to="/izmena-tezge">
                             <Typography variant="h6" className={classes.title}>
-                              Izmena podataka
+                              Izmena tezge
                             </Typography>
                           </Link>
                           )}
@@ -121,17 +131,17 @@ const App = observer(() => {
                       </div>
                   </Grid>
 
-                  <Grid item md={2}>
+                  <Grid item sm={6} md={2}>
                       <div className={classes.centerAppItems}>
 
                           {authStore.prijavljen ? (
-                              <Button style={{position: 'absolute', right: '0'}} color="inherit">
+                              <Button className={classes.authButtons} >
                                 <Link className={classes.homeLink} to="/odjava">
                                   Odjava
                                 </Link>
                               </Button>
                           ) : (
-                              <Button style={{position: 'absolute', right: '0'}} color="inherit">
+                              <Button className={classes.authButtons} >
                                 <Link className={classes.homeLink} to="/prijava">
                                   Prijava
                                 </Link>
