@@ -6,6 +6,11 @@
 - paginacija
 - selektovanje home slike
 
+
+
+
+
+
 poruka sacekajte dok snima tezgu i uploaduje slike
 resize slika i na 75dpi
 povecati sliku na 7Mb

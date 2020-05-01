@@ -43,7 +43,6 @@ const GalerijaSlika = observer(() => {
     }
 
     const handleSetObrisana = () => {
-        // ev => slika.obrisana = true
       slikaZaBrisanje.obrisana = true
       setOpen(false)
     }
@@ -114,7 +113,7 @@ const GalerijaSlika = observer(() => {
                                                     Da
                                                 </Button>
                                             </DialogActions>
-                                    </Dialog>
+                                        </Dialog>
                                     </CardActions>
                                 </Card>
                             </Grid>

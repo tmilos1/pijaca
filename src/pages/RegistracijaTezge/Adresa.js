@@ -136,6 +136,7 @@ const Adresa = observer(() => {
                         name="vebsajt"
                         label="Vebsajt"
                         type="url"
+                        autocomplete="off"
                         fullWidth
                         value={tezgaStore.form.fields.vebsajt.value}
                         error={tezgaStore.form.fields.vebsajt.touched && tezgaStore.form.fields.vebsajt.invalid}

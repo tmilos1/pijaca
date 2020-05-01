@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect }from 'react'
 
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
@@ -42,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
 const Home = observer(() => {
     const classes = useStyles()
     const { authStore, homeFilterStore} = useAppContext()
+
+    useEffect(() => {
+      authStore.redirectToHome = false
+    }, [authStore])
 
     const handleDelete = (chipToDelete) => () => {
       for(let el of homeFilterStore.filterProizvod.filter(el => el.kod === chipToDelete.kod)) {

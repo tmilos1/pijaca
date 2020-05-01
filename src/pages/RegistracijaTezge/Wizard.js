@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 
 import Container from '@material-ui/core/Container'
+import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { Link } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
 
 import { observer } from "mobx-react"
 import { useAppContext } from '../../stores/AppContext'
@@ -38,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
     buttons: {
         display: 'flex',
         justifyContent: 'flex-end',
+    },
+    deleteButton: {
+        display: 'flex',
+        justifyContent: 'flex-beginning',
     },
     button: {
         marginTop: theme.spacing(3),
@@ -68,6 +78,8 @@ function getStepContent(step) {
 
 const Wizard = observer(() => {
     const classes = useStyles()
+    const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false)
+
     const { tezgaStore } = useAppContext()
     const { appStore } = useAppContext()
     const { authStore } = useAppContext()
@@ -108,13 +120,19 @@ const Wizard = observer(() => {
             await tezgaStore.fetchData(authStore.prijavljen, authStore.tezga_id)
         }
         fetchData()
-    }, [tezgaStore, authStore])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
 
     let nextButtonVisible = null
+    let deleteButtonVisible = false
+
     switch (activeStep) {
         case 0:
             nextButtonVisible = tezgaStore.form.meta.isValid
+            if (authStore.prijavljen) {
+                deleteButtonVisible = true
+            }
             break;
 
         case 3:
@@ -150,6 +168,21 @@ const Wizard = observer(() => {
             </>
         )
     }
+  
+    const handleOpenDeleteConfirm = () => {
+      setOpenDeleteConfirm(true)
+    }
+  
+    const handleCloseDeleteConfirm = () => {
+      setOpenDeleteConfirm(false)
+    }
+
+    const handleDeleteTezga = async () => {
+        setOpenDeleteConfirm(false)
+        await tezgaStore.deleteTezga()
+        await authStore.handleLogoutClick(true)
+        await homeFilterStore.fetchTezge()
+    }
 
     return (
         <Container>
@@ -182,22 +215,60 @@ const Wizard = observer(() => {
                             ) : (
                                 <React.Fragment>
                                     {getStepContent(activeStep)}
-                                    <div className={classes.buttons}>
-                                        {activeStep !== 0 && (
-                                            <Button onClick={handleBack} className={classes.button}>
-                                                Prethodno
-                                            </Button>
-                                        )}
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={handleNext}
-                                                className={classes.button}
-                                                disabled={!nextButtonVisible}
-                                            >
-                                                {activeStep === steps.length - 1 ? dugmeSnimiLabela : 'Sledeće'}
-                                            </Button>
-                                    </div>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12} sm={6}>
+                                            {deleteButtonVisible &&
+                                                <div className={classes.deleteButton}>
+                                                    <Button
+                                                        variant="outlined"
+                                                        className={classes.button}
+                                                        disabled={!deleteButtonVisible}
+                                                        onClick={handleOpenDeleteConfirm}
+                                                    >
+                                                        Obriši tezgu
+                                                    </Button>
+                                                    <Dialog
+                                                        open={openDeleteConfirm}
+                                                        onClose={handleCloseDeleteConfirm}
+                                                        aria-labelledby="alert-dialog-title"
+                                                        aria-describedby="alert-dialog-description"
+                                                    >
+                                                        <DialogContent>
+                                                            <DialogContentText id="alert-dialog-description">
+                                                                Da li želite da obrišete tezgu?
+                                                            </DialogContentText>
+                                                        </DialogContent>
+                                                        <DialogActions>
+                                                            <Button onClick={handleCloseDeleteConfirm} color="primary">
+                                                                Ne
+                                                            </Button>
+                                                            <Button onClick={handleDeleteTezga} color="primary" autoFocus>
+                                                                Da
+                                                            </Button>
+                                                        </DialogActions>
+                                                    </Dialog>
+                                                </div>
+                                            }
+                                        </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <div className={classes.buttons}>
+                                                {activeStep !== 0 && (
+                                                    <Button onClick={handleBack} className={classes.button}>
+                                                        Prethodno
+                                                    </Button>
+                                                )}
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        onClick={handleNext}
+                                                        className={classes.button}
+                                                        disabled={!nextButtonVisible}
+                                                    >
+                                                        {activeStep === steps.length - 1 ? dugmeSnimiLabela : 'Sledeće'}
+                                                    </Button>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
                                 </React.Fragment>
                             )}
                             </>

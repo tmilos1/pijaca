@@ -89,10 +89,16 @@ const App = observer(() => {
     }
   }, [appStore])
 
+  let redirectToHome = null
+  if (authStore.redirectToHome) {
+    redirectToHome = <Redirect to="/" />
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
       <Router>
+        {redirectToHome}
         <ScrollToTop />
 
         <AppBar className={classes.appTitle} position="relative">

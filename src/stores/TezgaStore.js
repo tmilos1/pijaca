@@ -22,41 +22,37 @@ class TezgaStore extends AbstractFormStore {
     }
 
     fetchData = async (prijavljen, tezga_id) => {
-        if (!this.form._fetched_data) {
-            this.form.grupe = []
-            const responseGrupe = await fetch(API_URL + '/grupe')
-            const dataGrupe = await responseGrupe.json()
+        this.form.grupe = []
+        const responseGrupe = await fetch(API_URL + '/grupe')
+        const dataGrupe = await responseGrupe.json()
 
-            for (const row of dataGrupe) {
-                this.form.grupe.push({
-                    kod: row.kod,
-                    naziv: row.naziv,
-                    izabran: false
-                })
-            }
+        for (const row of dataGrupe) {
+            this.form.grupe.push({
+                kod: row.kod,
+                naziv: row.naziv,
+                izabran: false
+            })
+        }
 
-            this.form.proizvodi = []
-            const responseProizvodi = await fetch(API_URL + '/proizvodi')
-            const dataProizvodi = await responseProizvodi.json()
+        this.form.proizvodi = []
+        const responseProizvodi = await fetch(API_URL + '/proizvodi')
+        const dataProizvodi = await responseProizvodi.json()
 
-            for (const row of dataProizvodi) {
-                this.form.proizvodi.push({
-                    kod: row.kod,
-                    kod_grupe: row.kod_grupe,
-                    naziv: row.naziv,
-                    opis_cene: row.opis_cene,
-                    slika_proizvoda: row.slika_proizvoda,
-                    cena: 0.00,
-                    napomena: "",
-                    izabran: false
-                })
-            }
+        for (const row of dataProizvodi) {
+            this.form.proizvodi.push({
+                kod: row.kod,
+                kod_grupe: row.kod_grupe,
+                naziv: row.naziv,
+                opis_cene: row.opis_cene,
+                slika_proizvoda: row.slika_proizvoda,
+                cena: 0.00,
+                napomena: "",
+                izabran: false
+            })
+        }
 
-            if (prijavljen) {
-                this._prepareForEdit(tezga_id)
-            }
-
-            this.form._fetched_data = true
+        if (prijavljen) {
+            this._prepareForEdit(tezga_id)
         }
     }
 
@@ -184,7 +180,6 @@ class TezgaStore extends AbstractFormStore {
             proizvodi: [],
             kod_grada: 'KS',
             edit_mode: false,
-            _fetched_data: false,
             savingData: false,
         }
     }
@@ -313,7 +308,20 @@ class TezgaStore extends AbstractFormStore {
         await fetch(url, options)
     }
 
-    updatePassword = async (tezga_id) => {
+    deleteTezga = async () => {
+        let url = new URL(API_URL + '/tezge'),
+            options = {}
+
+        options.headers = {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json'
+        }
+        options.method = 'DELETE'
+
+        await fetch(url, options)
+    }
+
+    updatePassword = async () => {
         if (!this.form.fields.lozinka.value) {
             return
         }

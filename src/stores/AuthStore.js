@@ -33,6 +33,7 @@ class AuthStore extends AbstractFormStore {
     }
     prijavljen = false
     tezga_id = null
+    redirectToHome = false
 
     constructor() {
         super()
@@ -77,24 +78,27 @@ class AuthStore extends AbstractFormStore {
 
         localStorage.setItem('access_token', responseJson.access_token )
         localStorage.setItem('refresh_token', responseJson.refresh_token )
-        this.prijavljen = true
 
         const decodedToken = jwt_decode(responseJson.access_token)
         this.tezga_id = decodedToken.user_claims.tezga_id
         localStorage.setItem('tezga_id', decodedToken.user_claims.tezga_id)
         this.tezgaStore.initFormData()
+        this.prijavljen = true
     }
 
     handleFieldClick = () => {
         this.form.meta.error = ''
     }
 
-    handleLogoutClick = async () => {
-        this.prijavljen = false
+    handleLogoutClick = async (redirectToHome = false) => {
         localStorage.removeItem('access_token')
         localStorage.removeItem('refresh_token')
 
         this.tezgaStore.initFormData()
+        this.prijavljen = false
+        if (redirectToHome) {
+            this.redirectToHome = true
+        }
         return Promise.resolve()
     }
 }
@@ -103,6 +107,7 @@ decorate(AuthStore, {
     form: observable,
     prijavljen: observable,
     tezga_id: observable,
+    redirectToHome: observable,
 })
 
 export default AuthStore
