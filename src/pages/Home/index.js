@@ -50,6 +50,7 @@ const Home = observer(() => {
     const handleDelete = (chipToDelete) => () => {
       for(let el of homeFilterStore.filterProizvod.filter(el => el.kod === chipToDelete.kod)) {
         el.izabran = false
+        homeFilterStore.fetchTezge()
       }
     }
 

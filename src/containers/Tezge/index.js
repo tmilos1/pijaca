@@ -96,7 +96,7 @@ const Tezge = observer(() => {
                             </Grid>
                         ))
 
-                    ) : 'Nema tezgi koji ispunjavaju zadati kriterijum.'
+                    ) : 'Nema tezgi koje ispunjavaju zadati kriterijum.'
                 )}
             </Grid>
         </Container>

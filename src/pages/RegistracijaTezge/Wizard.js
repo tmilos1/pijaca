@@ -10,7 +10,7 @@ import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { Redirect, Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Dialog from '@material-ui/core/Dialog'
@@ -153,7 +153,8 @@ const Wizard = observer(() => {
                 Hvala na prijavi!
             </Typography>
             <Typography variant="subtitle1">
-                Sve narudžbine dobijaćete putem email-a.
+                Nakon što pregledamo prijavu, pojaviće se na sajtu.
+                Sve porudžbine dobijaćete putem email-a.
             </Typography>
         </>
     )
