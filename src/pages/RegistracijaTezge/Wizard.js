@@ -90,6 +90,7 @@ const Wizard = observer(() => {
                 await tezgaStore.updateTezga()
                 await tezgaStore.updatePassword()
                 await tezgaStore.uploadFiles(authStore.tezga_id)
+                await tezgaStore.updateNaslovna()
             }
             homeFilterStore.fetchTezge()
             tezgaStore.form.savingData = false
@@ -114,6 +115,12 @@ const Wizard = observer(() => {
     switch (activeStep) {
         case 0:
             nextButtonVisible = tezgaStore.form.meta.isValid
+            break;
+
+        case 3:
+            if (tezgaStore.form.proizvodi.filter(pr => pr.izabran === true).length > 0) {
+                nextButtonVisible = true
+            }
             break;
 
         default:

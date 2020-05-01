@@ -96,6 +96,7 @@ class TezgaStore extends AbstractFormStore {
                     this.form.postojece_slike.push(
                         {
                             url: row.url,
+                            naslovna: row.naslovna,
                             obrisana: false,
                         }
                     )
@@ -263,6 +264,27 @@ class TezgaStore extends AbstractFormStore {
             })
         }
         this.form.files = []
+    }
+
+    updateNaslovna = async () => {
+        const naslovna = this.form.postojece_slike.filter(sl => sl.obrisana === false && sl.naslovna === true).shift()
+        if (!naslovna) {
+            return
+        }
+
+        let url = new URL(API_URL + '/tezge/naslovna'),
+            options = {}
+
+        options.headers = {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json'
+        }
+        options.method = 'PATCH'
+        options.body = JSON.stringify({
+            url: naslovna.url,
+        })
+
+        await fetch(url, options)
     }
 
     updateTezga = async () => {
