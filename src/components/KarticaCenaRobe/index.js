@@ -72,6 +72,7 @@ const KarticaCenaRobe = observer((props) => {
                         name={props.proizvod.kod}
                         label={props.proizvod.opis_cene}
                         type="number"
+                        inputProps={{ min: "0" }}
 
                         value={props.proizvod.cena}
                         onChange={tezgaStore.handleProizvodCenaChange}

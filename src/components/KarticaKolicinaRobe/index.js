@@ -62,6 +62,7 @@ const KarticaKolicinaRobe = observer((props) => {
                     label="Količina"
                     name={props.proizvod.kod_proizvoda}
                     type="number"
+                    inputProps={{ min: "0", step: "0.1" }}
 
                     value={props.proizvod.kolicina}
                     onChange={orderStore.handleProizvodKolicinaChange}

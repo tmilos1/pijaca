@@ -127,7 +127,7 @@ const Tezga = observer(() => {
 
                     <br />
                         <Typography variant="h6">
-                            Ukupan iznos narudžbine: {orderStore.iznos} din.
+                            Ukupan iznos narudžbine: {orderStore.iznos.toFixed(2)} din.
                         </Typography>
                     </Paper>
 
