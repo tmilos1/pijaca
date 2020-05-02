@@ -61,8 +61,7 @@ const Header = observer(() => {
           localStorage.setItem('kod_grada', appStore.kod_grada)
         }
 
-        const site_url = '//' + appStore.kod_grada.toLowerCase() + '.' + process.env.REACT_APP_BASE_HOST
-        window.location.href = site_url
+        window.location.href = appStore.site_url
     }
 
     return (

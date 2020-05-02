@@ -44,9 +44,9 @@ const App = observer(() => {
   useEffect(() => {
     ReactGA.initialize(GA_ID)
 
-    if(!appStore.initialLoadProp) {
+    if(!appStore.initial_load) {
       ReactGA.pageview(window.location.pathname);  
-      appStore.initialLoadProp = true
+      appStore.initial_load = true
     }
   }, [appStore])
 

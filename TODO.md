@@ -13,6 +13,7 @@ https://itnext.io/integrating-dropzone-with-javascript-image-cropper-optimise-im
 - polje za kolicinu da ne ide u minus, razmisliti o koraku promene cifre
 
 - registracija salje link za aktivaciju sa tokenom
+- poruka - mejl: vasa tezga je sada aktivna
 
 GOTOVO:
 -------

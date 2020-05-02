@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const Tezga = observer(() => {
     const classes = useStyles()
     let { tezgaId } = useParams()
-    const { orderStore } = useAppContext()
+    const { orderStore, appStore } = useAppContext()
 
     useEffect(() => {
         orderStore.fetchData(tezgaId)
@@ -48,7 +48,7 @@ const Tezga = observer(() => {
         naruciVisible = true
     }
 
-    const fbPageUrl = "https://napijaci.rs/tezga/" + orderStore.tezga.id
+    const fbPageUrl = appStore.site_url + '/tezga/' + orderStore.tezga.id
 
     return (
         <main>
