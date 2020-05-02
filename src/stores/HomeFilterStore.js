@@ -9,9 +9,8 @@ class HomeFilterStore {
     loadingTezge = true
     loadingFilter = true
 
-    constructor() {
-        this.fetchData()
-        this.fetchTezge()
+    constructor(appStore) {
+        this.appStore = appStore
     }
 
     fetchData = () => {
@@ -20,6 +19,7 @@ class HomeFilterStore {
                 return response.json()
             })
             .then(data => {
+                this.filterGrupa = []
                 for (const row of data) {
                     this.filterGrupa.push({
                         kod: row.kod,
@@ -40,6 +40,7 @@ class HomeFilterStore {
                 return response.json()
             })
             .then(data => {
+                this.filterProizvod = []
                 for (const row of data) {
                     this.filterProizvod.push({
                         kodGrupe: row.kod_grupe,
@@ -53,7 +54,9 @@ class HomeFilterStore {
 
     fetchTezge = () => {
         let url = new URL(API_URL + '/tezge/filter'),
-            params = { 'proizvodi': this.filterProizvod
+            params = { 
+                'kod_grada': this.appStore.kod_grada,
+                'proizvodi': this.filterProizvod
                 .filter(el => el.izabran === true)
                 .map(el => el.kod)
             }
@@ -74,6 +77,7 @@ class HomeFilterStore {
             for (const row of data) {
                 this.tezge.push({
                     id: row.id,
+                    display_id: row.display_id,
                     naziv: row.naziv,
                     napomena: row.napomena,
                     slika: row.slika

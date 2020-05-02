@@ -66,7 +66,7 @@ const App = observer(() => {
         <Header />
 
         <Switch>
-          <Route path="/tezga/:tezgaId" component={withTracker(Tezga)} />
+          <Route path="/tezga/:displayId" component={withTracker(Tezga)} />
           <Route path="/prijava-tezge" component={withTracker(Wizard)} />
           <Route path="/izmena-tezge" component={withTracker(Wizard)} />
           <Route path="/prijava" component={withTracker(Prijava)} />

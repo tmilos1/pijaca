@@ -80,7 +80,7 @@ const Tezge = observer(() => {
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button color="primary" component={Link} to={'/tezga/' + tezga.id}>
+                                        <Button color="primary" component={Link} to={'/tezga/' + tezga.display_id}>
                                             Poseti
                                         </Button>
                                         {/* <div style={{width: "100%", textAlign: "right"}}>
@@ -89,7 +89,7 @@ const Tezge = observer(() => {
                                             </FacebookProvider>
                                         </div> */}
                                         <div style={{width: "100%", textAlign: "right"}}>
-                                            Tezga br. {tezga.id}
+                                            Tezga br. {tezga.display_id}
                                         </div>
                                     </CardActions>
                                 </Card>

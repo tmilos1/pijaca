@@ -64,8 +64,8 @@ class OrderStore extends AbstractFormStore {
 
     naruceno = false
 
-    fetchData = (tezga_id) => {
-        fetch(API_URL + '/tezge/' + tezga_id)
+    fetchData = (kod_grada, display_id) => {
+        fetch(API_URL + '/tezge/' + kod_grada + '/' + display_id)
             .then((response) => {
                 if (response.ok) {
                     return response.json();

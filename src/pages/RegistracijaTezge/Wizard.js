@@ -104,7 +104,7 @@ const Wizard = observer(() => {
                 await tezgaStore.uploadFiles(authStore.tezga_id)
                 await tezgaStore.updateNaslovna()
             }
-            homeFilterStore.fetchTezge()
+            await homeFilterStore.fetchTezge()
             tezgaStore.form.savingData = false
         }
 
@@ -190,7 +190,7 @@ const Wizard = observer(() => {
             <Paper className={classes.paper}>
                 <Typography component="h1" variant="h4" align="center">
                     {authStore.prijavljen ?
-                        "Izmena tezge br. " + authStore.tezga_id: "Prijava nove tezge!"
+                        "Izmena tezge br. " + authStore.display_id: "Prijava nove tezge!"
                     }
                 </Typography>
                 <Stepper activeStep={activeStep} className={classes.stepper}>

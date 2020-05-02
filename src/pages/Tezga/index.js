@@ -35,12 +35,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Tezga = observer(() => {
     const classes = useStyles()
-    let { tezgaId } = useParams()
+    let { displayId } = useParams()
     const { orderStore, appStore } = useAppContext()
 
     useEffect(() => {
-        orderStore.fetchData(tezgaId)
-    }, [orderStore, tezgaId])
+        orderStore.fetchData(appStore.kod_grada, displayId)
+    }, [orderStore, displayId, appStore.kod_grada])
 
     let naruciVisible = null
 
@@ -48,7 +48,7 @@ const Tezga = observer(() => {
         naruciVisible = true
     }
 
-    const fbPageUrl = appStore.site_url + '/tezga/' + orderStore.tezga.id
+    const fbPageUrl = appStore.site_url + '/tezga/' + orderStore.tezga.display_id
 
     return (
         <main>
@@ -56,7 +56,7 @@ const Tezga = observer(() => {
                 <Container >
                     <Paper className={classes.paperPadding}>
                         <Typography variant="h3">
-                            Tezga br. {orderStore.tezga.id}
+                            Tezga br. {orderStore.tezga.display_id}
                         </Typography>
                     </Paper>
                     <br />

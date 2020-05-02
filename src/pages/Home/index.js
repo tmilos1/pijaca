@@ -44,6 +44,11 @@ const Home = observer(() => {
     const { authStore, homeFilterStore} = useAppContext()
 
     useEffect(() => {
+      homeFilterStore.fetchData()
+      homeFilterStore.fetchTezge()
+    }, [homeFilterStore])
+
+    useEffect(() => {
       authStore.redirectToHome = false
     }, [authStore])
 

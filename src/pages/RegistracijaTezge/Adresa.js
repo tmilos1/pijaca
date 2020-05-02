@@ -46,7 +46,7 @@ const Adresa = observer(() => {
             <Typography variant="h6" >
                 Unesite podatke o prodavcu
             </Typography>
-            <Typography variant="body" style={{color: "grey"}} gutterBottom>
+            <Typography variant="body1" style={{color: "grey"}} gutterBottom>
                 (polja sa zvezdicom *, su obavezna)
             </Typography>
             <Grid container spacing={3}>
@@ -136,7 +136,7 @@ const Adresa = observer(() => {
                         name="vebsajt"
                         label="Vebsajt"
                         type="url"
-                        autocomplete="off"
+                        autoComplete="off"
                         fullWidth
                         value={tezgaStore.form.fields.vebsajt.value}
                         error={tezgaStore.form.fields.vebsajt.touched && tezgaStore.form.fields.vebsajt.invalid}
@@ -150,7 +150,7 @@ const Adresa = observer(() => {
                     <FormControl className={clsx(classes.textField)}>
                         <InputLabel htmlFor="standard-adornment-password">Lozinka {tezgaStore.form.edit_mode ? '' : '*'}</InputLabel>
                         <Input
-                            required={tezgaStore.form.edit_mode ? 'required' : undefined}
+                            required={tezgaStore.form.edit_mode ? true : undefined}
                             id="standard-adornment-password"
                             type={values.showPassword ? 'text' : 'password'}
                             name="lozinka"

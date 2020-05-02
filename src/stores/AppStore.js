@@ -1,9 +1,17 @@
 import { observable, computed, decorate } from "mobx"
 
 class AppStore {
-    kod_grada = 'KS'
-    grad = 'Kruševac'
+    kod_grada = ''
+    grad = ''
     initial_load = true
+
+    constructor() {
+        const subdomain = window.location.host.split('.')[1] ? window.location.host.split('.')[0] : false
+        if (!subdomain || subdomain === 'ks') {
+            this.kod_grada = 'KS'
+            this.grad = 'Kruševac'
+        }
+    }
 
     get site_url() {
         return process.env.REACT_APP_BASE_PROTOCOL + '://' 

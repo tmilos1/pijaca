@@ -1,7 +1,6 @@
 
-- belezenje kod-a za broj tezga za svaki grad posebno umesto autogen id-a
+- belezenje kod-a za broj tezge za svaki grad posebno umesto autogen id-a
 - query za filter da ide sa gradom kao parametrom
-- napraviti ks poddomen, redirekciju i vezati fb url-ove za novi url
 
 - integrisati cropperjs sa dropzonom
 https://itnext.io/integrating-dropzone-with-javascript-image-cropper-optimise-image-upload-e22b12ac0d8a
@@ -10,13 +9,17 @@ https://itnext.io/integrating-dropzone-with-javascript-image-cropper-optimise-im
 - paginacija
 
 - obavestenje admin-u kada se neko registruje
-- polje za kolicinu da ne ide u minus, razmisliti o koraku promene cifre
+
 
 - registracija salje link za aktivaciju sa tokenom
 - poruka - mejl: vasa tezga je sada aktivna
 
+- broj pregleda?
+
 GOTOVO:
 -------
+- napraviti ks poddomen, redirekciju i vezati fb url-ove za novi url
+- polje za kolicinu da ne ide u minus, razmisliti o koraku promene cifre
 - mogucnost da se obrise nalog
 (mozda i da se aktivira/deaktivira)
 - selektovanje home slike

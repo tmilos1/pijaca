@@ -10,10 +10,13 @@ import KontaktStore from './KontaktStore'
 
 export const tezgaStore = new TezgaStore()
 
+const appStore = makeInspectable(new AppStore())
+const homeFilterStore = makeInspectable(new HomeFilterStore(appStore))
+
 const appContext = React.createContext({
-  appStore: makeInspectable(new AppStore()),
+  appStore,
   authStore: makeInspectable(new AuthStore()),
-  homeFilterStore: makeInspectable(new HomeFilterStore()),
+  homeFilterStore: homeFilterStore,
   tezgaStore: makeInspectable(tezgaStore),
   orderStore: makeInspectable(new OrderStore()),
   kontaktStore: makeInspectable(new KontaktStore()),
