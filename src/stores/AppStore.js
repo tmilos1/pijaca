@@ -2,7 +2,7 @@ import { observable, decorate } from "mobx"
 
 class AppStore {
     kod_grada = 'KS'
-    grad = 'Krusevac'
+    grad = 'Kruševac'
     initialLoad = true
 }
 

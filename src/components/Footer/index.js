@@ -2,6 +2,10 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 
+import {
+  Link as LinkRouter
+} from "react-router-dom"
+
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -36,9 +40,9 @@ function Footer() {
                     Kontakt
             </Typography> */}
             <div style={{textAlign: 'center'}}>
-              <Link href="https://napijaci.rs/terms">Uslovi</Link>
+              <LinkRouter style={{color: 'inherit', textDecoration: 'inhert'}} to="/terms">Uslovi</LinkRouter>
               &nbsp;
-              <Link href="https://napijaci.rs/privacy">Privatnost</Link>
+              <LinkRouter style={{color: 'inherit', textDecoration: 'inhert'}} to="/privacy">Privatnost</LinkRouter>
             </div>
 
             <Copyright />

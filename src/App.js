@@ -5,18 +5,10 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom"
 
-import AppBar from '@material-ui/core/AppBar'
-import Button from '@material-ui/core/Button'
-import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import EcoIcon from '@material-ui/icons/Eco';
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
 
 import ReactGA from 'react-ga'
 import { GA_ID } from './stores/apiConf'
@@ -32,38 +24,8 @@ import Kontakt from './pages/Kontakt'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import Wizard from './pages/RegistracijaTezge/Wizard'
+import Header from './components/Header'
 import Footer from './components/Footer'
-
-import { makeStyles } from '@material-ui/core/styles'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    textAlign: 'center',
-  },
-  appTitle: {
-    overflow: "hidden",
-  },
-  homeLink: {
-    textDecoration: 'none',
-    color: 'white',
-    marginRight: '50px',
-  },
-  centerAppItems: {
-      display: "flex",
-      alignItems: "center",
-      height: "100%",
-  },
-  authButtons: {
-    position: 'absolute',
-    right: '0',
-    color: 'inherit',
-    [theme.breakpoints.down('sm')]: {
-      position: 'static',
-      right: 'inherit',
-    }
-  }
-}))
 
 function Odjava() {
   const { authStore } = useAppContext()
@@ -76,7 +38,6 @@ function Odjava() {
 }
 
 const App = observer(() => {
-  const classes = useStyles()
   const { appStore } = useAppContext()
   const { authStore } = useAppContext()
 
@@ -97,72 +58,14 @@ const App = observer(() => {
   return (
     <React.Fragment>
       <CssBaseline />
+
       <Router>
         {redirectToHome}
         <ScrollToTop />
 
-        <AppBar className={classes.appTitle} position="relative">
-          <Container >
-            <Toolbar>
-              <Grid container>
-                  <Grid item sm={12} md={3}>
-                      <div className={classes.centerAppItems}>
-                          <EcoIcon className={classes.icon} style={{alignSelf: "center"}}/>
-                          <Link className={classes.homeLink} to="/">
-                            <Typography variant="h6" color="inherit" noWrap>
-                              Pijaca - Kruševac
-                            </Typography>
-                          </Link>
-                      </div>
-                  </Grid>
-                  <Grid item sm={12} md={7}>
-                      <div className={classes.centerAppItems}>
-                          <Link className={classes.homeLink} to="/">
-                            <Typography variant="h6" className={classes.title}>
-                              Početna
-                            </Typography>
-                          </Link>
-                          {authStore.prijavljen && (
-                          <Link className={classes.homeLink} to="/izmena-tezge">
-                            <Typography variant="h6" className={classes.title}>
-                              Izmena tezge
-                            </Typography>
-                          </Link>
-                          )}
-                          <Link className={classes.homeLink} to="/kontakt">
-                            <Typography variant="h6" className={classes.title}>
-                              Kontakt
-                            </Typography>
-                          </Link>
-                      </div>
-                  </Grid>
-
-                  <Grid item sm={6} md={2}>
-                      <div className={classes.centerAppItems}>
-
-                          {authStore.prijavljen ? (
-                              <Button className={classes.authButtons} >
-                                <Link className={classes.homeLink} to="/odjava">
-                                  Odjava
-                                </Link>
-                              </Button>
-                          ) : (
-                              <Button className={classes.authButtons} >
-                                <Link className={classes.homeLink} to="/prijava">
-                                  Prijava
-                                </Link>
-                              </Button>
-                          )}
-                      </div>
-                  </Grid>
-                </Grid>
-
-            </Toolbar>
-          </Container>
-        </AppBar>
+        <Header />
 
         <Switch>
-
           <Route path="/tezga/:tezgaId" component={withTracker(Tezga)} />
           <Route path="/prijava-tezge" component={withTracker(Wizard)} />
           <Route path="/izmena-tezge" component={withTracker(Wizard)} />
@@ -172,11 +75,11 @@ const App = observer(() => {
           <Route path="/privacy" component={withTracker(Privacy)} />
           <Route path="/terms" component={withTracker(Terms)} />
           <Route path="/" component={Home} />
-
         </Switch>
+
+        <Footer />
       </Router>
 
-      <Footer />
     </React.Fragment>
   );
 })
