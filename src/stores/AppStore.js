@@ -14,8 +14,15 @@ class AppStore {
     }
 
     get site_url() {
-        return process.env.REACT_APP_BASE_PROTOCOL + '://' 
-            + this.kod_grada.toLowerCase() + '.' + process.env.REACT_APP_BASE_HOST
+        let grad = null
+        switch(this.kod_grada) {
+            case 'KS':
+            default:
+                grad = 'krusevac';
+                break;
+        }
+
+        return process.env.REACT_APP_BASE_PROTOCOL + '://' + grad + '.' + process.env.REACT_APP_BASE_HOST
     }
 }
 
