@@ -13,7 +13,7 @@ class HomeFilterStore {
         this.appStore = appStore
     }
 
-    fetchData = () => {
+    fetchAuxData = () => {
         fetch(API_URL + '/grupe')
             .then((response) => {
                 return response.json()
@@ -97,7 +97,7 @@ class HomeFilterStore {
         const ukupnoIzBaze = this.tezge.length
         for (let i = 0; i < 20 - ukupnoIzBaze; i++) {
             this.tezge.push({
-                id: 99999 + i,
+                display_id: 99999 + i,
                 naziv: 'Slobodna tezga',
                 napomena: 'Ovo je mesto za Vašu tezgu. Prijavite se besplatno!',
                 slika: this.getStandImage()

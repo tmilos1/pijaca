@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom"
 
 import { FacebookProvider, Comments, Like } from 'react-facebook';
 
-import { FB_ID } from './../../stores/apiConf'
+import { FB_ID } from '../../stores/apiConf'
 
 import Carousel from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Tezga = observer(() => {
+const Order = observer(() => {
     const classes = useStyles()
     let { displayId } = useParams()
     const { orderStore, appStore } = useAppContext()
@@ -89,20 +89,50 @@ const Tezga = observer(() => {
                     </Paper>
                     <br />
 
+                    {/* <Carousel
+                        slidesPerPage={3}
+                        arrows
+                        offset={430}
+                        clickToChange
+                        breakpoints={{
+                            640: {
+                                slidesPerPage: 1,
+                                arrows: false,
+                                infinite: true,
+                                clickToChange: false,
+                                centered: true,
+                                offset: 0,
+                                slidesPerScroll: 1,
+                            },
+                            900: {
+                                slidesPerPage: 2,
+                                clickToChange: false,
+                                animationSpeed: 2000,
+                                infinite: true,
+                                centered: true,
+                                offset: 0,
+                                slidesPerScroll: 1,
+                            }
+                        }}
+                    > */}
                     <Carousel
                         slidesPerPage={3}
                         arrows
                         breakpoints={{
                             640: {
                                 slidesPerPage: 1,
-                                clickToChange: true,
                                 arrows: false,
-                                infinite: true,
+                                minDraggableOffset: 1,
+                                animationSpeed: 200,
                             },
                             900: {
                                 slidesPerPage: 2,
+                                arrows: false,
+                                minDraggableOffset: 1,
+                                animationSpeed: 200,
                             }
                         }}
+                        
                     >
                         {orderStore.tezga.slike.map(slika => (
                             <img key={slika.url} alt="random" height="300" src={slika.url} />
@@ -112,20 +142,20 @@ const Tezga = observer(() => {
                     <br />
 
                     <Paper className={classes.paperPadding}>
-                    {orderStore.tezga.grupe.map(grupa => (
-                    <Grid container spacing={3} key={grupa.kod}>
-                        <Grid item xs={12} >
-                                <Typography variant="h6">
-                                    {grupa.naziv}
-                                </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <GrupaKarticaKolicinaRobe kodGrupe={grupa.kod} />
-                        </Grid>
-                    </Grid>
-                    ))}
+                        {orderStore.tezga.grupe.map(grupa => (
+                            <Grid container spacing={3} key={grupa.kod}>
+                                <Grid item xs={12} >
+                                    <Typography variant="h6">
+                                        {grupa.naziv}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <GrupaKarticaKolicinaRobe kodGrupe={grupa.kod} />
+                                </Grid>
+                            </Grid>
+                        ))}
 
-                    <br />
+                        <br />
                         <Typography variant="h6">
                             Ukupan iznos narudžbine: {orderStore.iznos.toFixed(2)} din.
                         </Typography>
@@ -136,55 +166,55 @@ const Tezga = observer(() => {
                     <br />
                     <Paper className={classes.paperPadding}>
                         {orderStore.naruceno ?
-                        (
+                            (
                                 <>
-                                <Typography variant="h5" gutterBottom>
-                                    Hvala na narudžbini! Ukoliko ste uneli email, narudžbenica će Vam tamo stići.<br />
-                                    Proverite i spam (neželjenu poštu).
+                                    <Typography variant="h5" gutterBottom>
+                                        Hvala na narudžbini! Ukoliko ste uneli email, narudžbenica će Vam tamo stići.<br />
+                                        Proverite i spam (neželjenu poštu).
                                 </Typography>
-                                <br />
-                                <br />
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                    component={Link} to={'/'}
-                                >
-                                    Početna strana
+                                    <br />
+                                    <br />
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        className={classes.button}
+                                        component={Link} to={'/'}
+                                    >
+                                        Početna strana
                                 </Button>
-                            </>
-                        )
+                                </>
+                            )
                             :
-                        (
-                            <>
-                                <NaruciForma />
-                                <br />
-                                <br />
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                    onClick={orderStore.handleNaruciClick}
-                                    disabled={!naruciVisible}
-                                >
-                                    Naruči
+                            (
+                                <>
+                                    <NaruciForma />
+                                    <br />
+                                    <br />
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        className={classes.button}
+                                        onClick={orderStore.handleNaruciClick}
+                                        disabled={!naruciVisible}
+                                    >
+                                        Naruči
                                 </Button>
-                            </>
-                        )
+                                </>
+                            )
                         }
                     </Paper>
 
                     <br />
                     <br />
-                    <Paper className={classes.paperPadding} style={{textAlign: 'center'}}>
+                    <Paper className={classes.paperPadding} style={{ textAlign: 'center' }}>
                         <FacebookProvider appId={FB_ID}>
-                            <Comments href={fbPageUrl} width="100%"/>
+                            <Comments href={fbPageUrl} width="100%" />
                         </FacebookProvider>
                     </Paper>
-            </Container>
+                </Container>
             </div>
         </main>
     )
 })
 
-export default Tezga
+export default Order

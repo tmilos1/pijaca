@@ -19,7 +19,7 @@ import withTracker from './withTracker'
 import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Prijava from './pages/Prijava'
-import Tezga from './pages/Tezga'
+import Order from './pages/Order'
 import Kontakt from './pages/Kontakt'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
@@ -66,7 +66,7 @@ const App = observer(() => {
         <Header />
 
         <Switch>
-          <Route path="/tezga/:displayId" component={withTracker(Tezga)} />
+          <Route path="/tezga/:displayId" component={withTracker(Order)} />
           <Route path="/prijava-tezge" component={withTracker(Wizard)} />
           <Route path="/izmena-tezge" component={withTracker(Wizard)} />
           <Route path="/prijava" component={withTracker(Prijava)} />

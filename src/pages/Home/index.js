@@ -44,7 +44,7 @@ const Home = observer(() => {
     const { authStore, homeFilterStore} = useAppContext()
 
     useEffect(() => {
-      homeFilterStore.fetchData()
+      homeFilterStore.fetchAuxData()
       homeFilterStore.fetchTezge()
     }, [homeFilterStore])
 

@@ -6,8 +6,6 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 
-import '@brainhubeu/react-carousel/lib/style.css'
-
 import { makeStyles } from '@material-ui/core/styles'
 
 import { observer } from "mobx-react"

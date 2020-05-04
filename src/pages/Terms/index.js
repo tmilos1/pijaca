@@ -3,8 +3,6 @@ import React from 'react'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 
-import '@brainhubeu/react-carousel/lib/style.css'
-
 import { makeStyles } from '@material-ui/core/styles'
 
 import { observer } from "mobx-react"
