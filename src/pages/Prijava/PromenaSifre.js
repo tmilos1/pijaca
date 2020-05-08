@@ -1,15 +1,10 @@
-import React from 'react'
-import {Redirect} from 'react-router-dom';
+import React, { useState } from 'react'
+import { useParams } from "react-router-dom"
 
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-// import Box from '@material-ui/core/Box';
 import MuiAlert from '@material-ui/lab/Alert'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
@@ -44,37 +39,46 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const SignIn = observer(() => {
+const PromenaSifre = observer(() => {
     const classes = useStyles()
-    const { authStore } = useAppContext()
+    let { token } = useParams()
 
-    let loginVisible = null
+    const { promenaSifreStore } = useAppContext()
+    const [ submitted, setSubmitted ] = useState(false)
 
-    if (authStore.form.meta.isValid) {
-        loginVisible = true
+    let submitVisible = null
+
+    if (promenaSifreStore.form.meta.isValid) {
+        submitVisible = true
     }
 
     const handleKeyPress = (event) => {
         if(event.key === 'Enter'){
-            authStore.handleLoginClick()
+            handlePromeniLozinkuClick()
         }
       }
 
+    const handlePromeniLozinkuClick = async (event) => {
+        const promenjenaSifra = await promenaSifreStore.handlePromeniLozinkuClick(token)
+
+        if (promenjenaSifra) {
+            setSubmitted(true)
+        }
+    }
+
     let greskaPrijave = null
-    if (authStore.form.meta.error) {
+    if (promenaSifreStore.form.meta.error) {
         greskaPrijave = (
             <>
                 <br />
                 <br />
-                <Alert severity="error">{authStore.form.meta.error}</Alert>
+                <Alert severity="error">{promenaSifreStore.form.meta.error}</Alert>
                 <br />
             </>
         )
     }
     return (
         <Container component="main" maxWidth="xs">
-            {authStore.prijavljen && <Redirect to="/izmena-tezge" />}
-
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -83,22 +87,22 @@ const SignIn = observer(() => {
                 <Typography component="h1" variant="h5">
                     Prijava
                 </Typography>
+                { !submitted ? (
                 <form className={classes.form} noValidate>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Email"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        value={authStore.form.fields.email.value}
-                        error={authStore.form.fields.email.touched && authStore.form.fields.email.invalid}
-                        helperText={authStore.form.fields.email.error}
-                        onChange={authStore.onFieldChange}
-                        onClick={authStore.handleFieldClick}
+                        name="lozinka1"
+                        label="Lozinka"
+                        type="password"
+                        id="lozinka1"
+                        autoComplete="current-lozinka"
+                        value={promenaSifreStore.form.fields.lozinka1.value}
+                        error={promenaSifreStore.form.fields.lozinka2.touched && promenaSifreStore.form.fields.lozinka1.invalid}
+                        onChange={promenaSifreStore.onFieldChange}
+                        onClick={promenaSifreStore.handleFieldClick}
                         onKeyPress={handleKeyPress}
                     />
                     <TextField
@@ -106,46 +110,42 @@ const SignIn = observer(() => {
                         margin="normal"
                         required
                         fullWidth
-                        name="password"
-                        label="Lozinka"
+                        name="lozinka2"
+                        label="Ponoviti lozinku"
                         type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={authStore.form.fields.password.value}
-                        error={authStore.form.fields.password.touched && authStore.form.fields.password.invalid}
-                        helperText={authStore.form.fields.password.error}
-                        onChange={authStore.onFieldChange}
-                        onClick={authStore.handleFieldClick}
+                        id="lozinka2"
+                        autoComplete="current-lozinka"
+                        value={promenaSifreStore.form.fields.lozinka2.value}
+                        error={promenaSifreStore.form.fields.lozinka2.touched && promenaSifreStore.form.fields.lozinka2.invalid}
+                        onChange={promenaSifreStore.onFieldChange}
+                        onClick={promenaSifreStore.handleFieldClick}
                         onKeyPress={handleKeyPress}
                     />
-                    {/* <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Zapamti me"
-                    /> */}
                     {greskaPrijave}
                     <Button
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={authStore.handleLoginClick}
-                        disabled={!loginVisible}
+                        onClick={handlePromeniLozinkuClick}
+                        disabled={!submitVisible}
                     >
-                        Prijava
+                        Promeni lozinku
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                        <Link href="/reset-lozinke" variant="body2">
-                                Zaboravljena lozinka?
-                        </Link>
-                        </Grid>
-                        <Grid item>
-                        </Grid>
-                    </Grid>
                 </form>
+                ) : (
+                    <p>
+                        <Typography variant="body">
+                           Lozinka je promenjena.
+                           <br />
+                        </Typography>
+                    </p>
+                )
+                }
             </div>
         </Container>
     );
 })
 
-export default SignIn
+export default PromenaSifre
+

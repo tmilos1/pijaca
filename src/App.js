@@ -19,6 +19,8 @@ import withTracker from './withTracker'
 import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Prijava from './pages/Prijava'
+import PromenaSifre from './pages/Prijava/PromenaSifre'
+import ResetLozinke from './pages/Prijava/ResetLozinke'
 import Order from './pages/Order'
 import Kontakt from './pages/Kontakt'
 import Privacy from './pages/Privacy'
@@ -70,6 +72,8 @@ const App = observer(() => {
           <Route path="/prijava-tezge" component={withTracker(Wizard)} />
           <Route path="/izmena-tezge" component={withTracker(Wizard)} />
           <Route path="/prijava" component={withTracker(Prijava)} />
+          <Route path="/promeni-lozinku/:token" component={withTracker(PromenaSifre)} />
+          <Route path="/reset-lozinke" component={withTracker(ResetLozinke)} />
           <Route path="/odjava" component={withTracker(Odjava)} />
           <Route path="/kontakt" component={withTracker(Kontakt)} />
           <Route path="/privacy" component={withTracker(Privacy)} />
